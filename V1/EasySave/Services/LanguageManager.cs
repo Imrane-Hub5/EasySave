@@ -10,29 +10,54 @@ namespace EasySave.Services
     {
         private Language _locale;
 
-        private readonly Dictionary<string, Dictionary<Language, string>> _translations = new()
-        {
-            { "menu_title",       { { Language.English, "===== EasySave v1.0 =====" },          { Language.French, "===== EasySave v1.0 =====" } } },
-            { "menu_add",         { { Language.English, "1. Add a backup job" },                 { Language.French, "1. Ajouter un travail de sauvegarde" } } },
-            { "menu_list",        { { Language.English, "2. List backup jobs" },                 { Language.French, "2. Lister les travaux de sauvegarde" } } },
-            { "menu_execute",     { { Language.English, "3. Execute a backup job" },             { Language.French, "3. Exécuter un travail de sauvegarde" } } },
-            { "menu_execute_all", { { Language.English, "4. Execute all backup jobs" },          { Language.French, "4. Exécuter tous les travaux" } } },
-            { "menu_remove",      { { Language.English, "5. Remove a backup job" },              { Language.French, "5. Supprimer un travail de sauvegarde" } } },
-            { "menu_quit",        { { Language.English, "6. Quit" },                             { Language.French, "6. Quitter" } } },
-            { "menu_choice",      { { Language.English, "Your choice: " },                       { Language.French, "Votre choix : " } } },
-            { "job_name",         { { Language.English, "Job name: " },                          { Language.French, "Nom du travail : " } } },
-            { "job_source",       { { Language.English, "Source path: " },                       { Language.French, "Chemin source : " } } },
-            { "job_target",       { { Language.English, "Target path: " },                       { Language.French, "Chemin cible : " } } },
-            { "job_type",         { { Language.English, "Type (1=Complete, 2=Differential): " }, { Language.French, "Type (1=Complète, 2=Différentielle) : " } } },
-            { "job_added",        { { Language.English, "Job added successfully." },             { Language.French, "Travail ajouté avec succès." } } },
-            { "job_removed",      { { Language.English, "Job removed." },                        { Language.French, "Travail supprimé." } } },
-            { "job_max",          { { Language.English, "Maximum of 5 jobs reached." },          { Language.French, "Maximum de 5 travaux atteint." } } },
-            { "job_number",       { { Language.English, "Job number: " },                        { Language.French, "Numéro du travail : " } } },
-            { "job_none",         { { Language.English, "No backup jobs configured." },          { Language.French, "Aucun travail de sauvegarde configuré." } } },
-            { "backup_done",      { { Language.English, "Backup completed." },                   { Language.French, "Sauvegarde terminée." } } },
-            { "all_done",         { { Language.English, "All backups completed." },              { Language.French, "Toutes les sauvegardes sont terminées." } } },
-            { "invalid_choice",   { { Language.English, "Invalid choice." },                    { Language.French, "Choix invalide." } } },
-            { "invalid_number",   { { Language.English, "Invalid number." },                    { Language.French, "Numéro invalide." } } },
+        private readonly Dictionary<string, string> _translationsEN = new Dictionary<string, string>
+	{
+            { "menu_title",       "===== EasySave v1.0 =====" },
+            { "menu_add",         "1. Add a backup job" },
+            { "menu_list",        "2. List backup jobs" },
+            { "menu_execute",     "3. Execute a backup job" },
+            { "menu_execute_all", "4. Execute all backup jobs" },
+            { "menu_remove",      "5. Remove a backup job" },
+            { "menu_quit",        "6. Quit" },
+            { "menu_choice",      "Your choice: " },
+            { "job_name",         "Job name: " },
+            { "job_source",       "Source path: " },
+            { "job_target",       "Target path: " },
+            { "job_type",         "Type (1=Complete, 2=Differential): " },
+            { "job_added",        "Job added successfully." },
+            { "job_removed",      "Job removed." },
+            { "job_max",          "Maximum of 5 jobs reached." },
+            { "job_number",       "Job number: " },
+            { "job_none",         "No backup jobs configured." },
+            { "backup_done",      "Backup completed." },
+            { "all_done",         "All backups completed." },
+            { "invalid_choice",   "Invalid choice." },
+            { "invalid_number",   "Invalid number." }
+        };
+
+        private readonly Dictionary<string, string> _translationsFR = new Dictionary<string, string>
+	{
+            { "menu_title",       "===== EasySave v1.0 =====" },
+            { "menu_add",         "1. Ajouter un travail de sauvegarde" },
+            { "menu_list",        "2. Lister les travaux de sauvegarde" },
+            { "menu_execute",     "3. Ex\u00e9cuter un travail de sauvegarde" },
+            { "menu_execute_all", "4. Ex\u00e9cuter tous les travaux" },
+            { "menu_remove",      "5. Supprimer un travail de sauvegarde" },
+            { "menu_quit",        "6. Quitter" },
+            { "menu_choice",      "Votre choix : " },
+            { "job_name",         "Nom du travail : " },
+            { "job_source",       "Chemin source : " },
+            { "job_target",       "Chemin cible : " },
+            { "job_type",         "Type (1=Compl\u00e8te, 2=Diff\u00e9rentielle) : " },
+            { "job_added",        "Travail ajout\u00e9 avec succ\u00e8s." },
+            { "job_removed",      "Travail supprim\u00e9." },
+            { "job_max",          "Maximum de 5 travaux atteint." },
+            { "job_number",       "Num\u00e9ro du travail : " },
+            { "job_none",         "Aucun travail de sauvegarde configur\u00e9." },
+            { "backup_done",      "Sauvegarde termin\u00e9e." },
+            { "all_done",         "Toutes les sauvegardes sont termin\u00e9es." },
+            { "invalid_choice",   "Choix invalide." },
+            { "invalid_number",   "Num\u00e9ro invalide." }
         };
 
         public LanguageManager(Language locale = Language.English)
@@ -40,17 +65,18 @@ namespace EasySave.Services
             _locale = locale;
         }
 
-        public void SetLocale(Language lang) => _locale = lang;
+        public void SetLocale(Language lang)
+        {
+            _locale = lang;
+        }
 
         /// <summary>
         /// Returns the translated string for the given key
         /// </summary>
         public string Get(string key)
         {
-            if (_translations.TryGetValue(key, out var langs) && langs.TryGetValue(_locale, out var text))
-                return text;
-            return key;
+            Dictionary<string, string> translations = _locale == Language.French ? _translationsFR : _translationsEN;
+            return translations.TryGetValue(key, out string? value) ? value : key;
         }
     }
 }
-
