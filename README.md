@@ -58,7 +58,7 @@ V1/
 ├── EasySave/
 │   ├── Models/
 │   │   ├── BackupJob.cs          # Backup job model
-│   │   ├── StateEntry.cs         # Real-time state model
+│   │   ├── JobState.cs           # Real-time state model
 │   │   └── Enums.cs              # BackupType, Language enums
 │   ├── Services/
 │   │   ├── BackupManager.cs      # Singleton - manages all jobs
