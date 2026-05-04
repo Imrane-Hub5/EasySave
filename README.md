@@ -116,9 +116,9 @@ V1/
 | Developer | Files |
 |-----------|-------|
 | **Quentin** | `EasySave.sln`, `EasySave.csproj`, `EasyLog.csproj`, `LogEntry.cs`, `Enums.cs` |
-| **H** | `IBackupStrategy.cs`, `FullBackupStrategy.cs`, `JobState.cs`, `Logger.cs` |
-| **I** | `DiffBackupStrategy.cs`, `StateManager.cs`, `BackupJob.cs` |
-| **G** | `LanguageManager.cs`, `BackupManager.cs`, `Program.cs` |
+| **Hager** | `IBackupStrategy.cs`, `FullBackupStrategy.cs`, `JobState.cs`, `Logger.cs` |
+| **Imrane** | `DiffBackupStrategy.cs`, `StateManager.cs`, `BackupJob.cs` |
+| **Ghada** | `LanguageManager.cs`, `BackupManager.cs`, `Program.cs` |
 
 ---
 
