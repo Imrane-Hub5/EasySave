@@ -2,12 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using EasyLog;
+using EasySave.Services;
+using EasySave.Strategies;
 
-namespace EasySave
+namespace EasySave.Models
 {
-    /// <summary>
-    /// Represents a single backup job
-    /// </summary>
     public class BackupJob
     {
         public string Name { get; set; } = string.Empty;
@@ -32,14 +31,8 @@ namespace EasySave
             _strategy = strategy;
         }
 
-        /// <summary>
-        /// Returns current state of the job
-        /// </summary>
-        public JobState GetState() => new JobState { JobName = Name, Status = "Inactive" };
+        public StateEntry GetState() => new StateEntry { JobName = Name, Status = "Inactive" };
 
-        /// <summary>
-        /// Executes the backup using the assigned strategy
-        /// </summary>
         public void Execute(Logger logger, StateManager stateManager)
         {
             if (_strategy == null) return;
@@ -49,7 +42,7 @@ namespace EasySave
             int remainingFiles = files.Count;
             long remainingSize = totalSize;
 
-            stateManager.UpdateState(new JobState
+            stateManager.UpdateState(new StateEntry
             {
                 JobName = Name,
                 Status = "Active",
@@ -80,7 +73,7 @@ namespace EasySave
                 remainingFiles--;
                 remainingSize -= fileSize;
 
-                stateManager.UpdateState(new JobState
+                stateManager.UpdateState(new StateEntry
                 {
                     JobName = Name,
                     Status = "Active",

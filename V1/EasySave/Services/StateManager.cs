@@ -7,30 +7,30 @@ namespace EasySave.Services
 {
     public class StateManager
     {
-        // Le fichier est stocké dans le dossier d'exécution (bin/Debug/...)
-        private readonly string _stateFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "state.json");
+        private readonly string _stateFilePath = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+            "EasySave", "state.json"
+        );
 
-        /// Écrit l'état actuel d'un travail dans le fichier JSON.
-      
-        public void UpdateState(JobState state)
+        public void UpdateState(StateEntry state)  // ← JobState → StateEntry
         {
             try
             {
-                // Mise à jour de l'horodatage système
                 state.Timestamp = DateTime.Now;
-
-                // On configure le JSON pour qu'il soit bien présenté (indentation)
                 var options = new JsonSerializerOptions { WriteIndented = true };
-                string jsonContent = JsonSerializer.Serialize(state, options);
-
-                // On utilise WriteAllText pour écraser le fichier à chaque fois (Temps Réel)
-                File.WriteAllText(_stateFilePath, jsonContent);
+                string json = JsonSerializer.Serialize(state, options);
+                Directory.CreateDirectory(Path.GetDirectoryName(_stateFilePath)!);
+                File.WriteAllText(_stateFilePath, json);
             }
             catch (Exception ex)
             {
-                // En cas d'erreur (fichier utilisé par un autre processus par exemple)
-                Console.WriteLine($"Erreur lors de la mise à jour du fichier d'état : {ex.Message}");
+                Console.WriteLine($"State update error: {ex.Message}");
             }
+        }
+
+        public void ResetState(string jobName)  // ← AJOUTER
+        {
+            UpdateState(new StateEntry { JobName = jobName, Status = "Inactive" });
         }
     }
 }

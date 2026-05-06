@@ -1,34 +1,32 @@
 using System;
+using System.Diagnostics;
 using System.IO;
 
 namespace EasySave.Strategies
 {
     public class DiffBackupStrategy : IBackupStrategy
     {
-        // Nom affiché dans les logs ou l'interface
         public string GetTypeName() => "Differential";
 
-        /// Vérifie si le fichier source doit être copié vers la cible.
-      
-        public bool ShouldCopy(string sourcePath, string targetPath)
+        public long Execute(string src, string dst)
         {
-            // Si le fichier n'existe pas encore à destination, on doit le copier
-            if (!File.Exists(targetPath))
+            try
             {
-                return true;
+                if (File.Exists(dst) && File.GetLastWriteTime(src) <= File.GetLastWriteTime(dst))
+                    return 0;
+
+                string? dir = Path.GetDirectoryName(dst);
+                if (dir != null) Directory.CreateDirectory(dir);
+
+                Stopwatch sw = Stopwatch.StartNew();
+                File.Copy(src, dst, overwrite: true);
+                sw.Stop();
+                return sw.ElapsedMilliseconds;
             }
-
-            // On récupère la date de dernière modification des deux fichiers
-            DateTime sourceDate = File.GetLastWriteTime(sourcePath);
-            DateTime targetDate = File.GetLastWriteTime(targetPath);
-
-            // On ne copie que si la source est plus récente que la destination
-            return sourceDate > targetDate;
-        }
-
-        public void Execute(string src, string dst)
-        {
-            
+            catch (Exception)
+            {
+                return -1;
+            }
         }
     }
 }
