@@ -1,16 +1,16 @@
 using System;
 using System.IO;
-using System.Text.Json;
 
 namespace EasyLog
 {
     /// <summary>
-    /// Singleton logger - writes daily JSON log files
+    /// Singleton logger — delegates formatting to ILogFormatter (Strategy pattern)
     /// </summary>
     public class Logger
     {
         private static Logger? _instance;
         private readonly string _logDir;
+        private ILogFormatter? _formatter;
 
         private Logger()
         {
@@ -29,13 +29,30 @@ namespace EasyLog
         }
 
         /// <summary>
-        /// Writes a log entry to the daily JSON log file
+        /// Sets the formatter to use (JSON or XML)
+        /// </summary>
+        public void SetFormatter(ILogFormatter formatter)
+        {
+            _formatter = formatter;
+        }
+
+        /// <summary>
+        /// Writes a log entry using the current formatter
         /// </summary>
         public void Log(LogEntry entry)
         {
-            string filePath = Path.Combine(_logDir, DateTime.Now.ToString("yyyy-MM-dd") + ".json");
-            string json = JsonSerializer.Serialize(entry, new JsonSerializerOptions { WriteIndented = true });
-            File.AppendAllText(filePath, json + Environment.NewLine);
+            if (_formatter == null)
+                throw new InvalidOperationException("No formatter set. Call SetFormatter() first.");
+
+            string filePath = Path.Combine(
+                _logDir,
+                DateTime.Now.ToString("yyyy-MM-dd") + _formatter.GetExtension()
+            );
+
+            string content = _formatter.Format(entry);
+            File.AppendAllText(filePath, content + Environment.NewLine);
         }
+
+        public string GetLogPath() => _logDir;
     }
 }
