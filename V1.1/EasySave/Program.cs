@@ -1,15 +1,19 @@
 using System;
 using EasySave.Models;
 using EasySave.Services;
+using EasyLog; 
 
-// ── Command line mode ─────────────────────────────────────────────────────────
+// --- V1.1 : Initial configuration ---
+ILogFormatter selectedFormatter = SelectLogFormat();
+Logger.GetInstance().SetFormatter(selectedFormatter);
+
 if (args.Length > 0)
 {
     BackupManager.GetInstance().ExecuteRange(args[0]);
     return;
 }
 
-// ── Interactive mode ──────────────────────────────────────────────────────────
+// --- Interactive mode ---
 LanguageManager lang = SelectLanguage();
 BackupManager manager = BackupManager.GetInstance();
 bool running = true;
@@ -28,7 +32,7 @@ while (running)
         case "4": manager.RunAll(); Console.WriteLine(lang.Get("all_done"));       break;
         case "5": RemoveJob(manager, lang);                                        break;
         case "6": running = false;                                                 break;
-        default:  Console.WriteLine(lang.Get("invalid_choice"));                  break;
+        default:  Console.WriteLine(lang.Get("invalid_choice"));                   break;
     }
 
     if (running)
@@ -40,7 +44,23 @@ while (running)
     }
 }
 
-// ── Language selection ────────────────────────────────────────────────────────
+// --- Logic for V1.1 Log Format Selection ---
+static ILogFormatter SelectLogFormat()
+{
+    Console.WriteLine("Select Log Format / Choisissez le format des logs:");
+    Console.WriteLine("1. JSON");
+    Console.WriteLine("2. XML");
+    Console.Write("> ");
+    string? choice = Console.ReadLine();
+    Console.Clear();
+    
+    if (choice == "2")
+    {
+        return new XmlFormatter(); 
+    }
+    return new JsonFormatter(); 
+}
+
 static LanguageManager SelectLanguage()
 {
     Console.WriteLine("Select language / Choisissez la langue:");
@@ -53,7 +73,6 @@ static LanguageManager SelectLanguage()
     return new LanguageManager(locale);
 }
 
-// ── Menu ──────────────────────────────────────────────────────────────────────
 static void ShowMenu(LanguageManager lang)
 {
     Console.WriteLine(lang.Get("menu_title"));
@@ -66,7 +85,6 @@ static void ShowMenu(LanguageManager lang)
     Console.Write(lang.Get("menu_choice"));
 }
 
-// ── Add job ───────────────────────────────────────────────────────────────────
 static void AddJob(BackupManager manager, LanguageManager lang)
 {
     Console.Write(lang.Get("job_name"));
@@ -81,7 +99,6 @@ static void AddJob(BackupManager manager, LanguageManager lang)
     Console.WriteLine(added ? lang.Get("job_added") : lang.Get("job_max"));
 }
 
-// ── List jobs ─────────────────────────────────────────────────────────────────
 static void ListJobs(BackupManager manager, LanguageManager lang)
 {
     if (manager.Jobs.Count == 0) { Console.WriteLine(lang.Get("job_none")); return; }
@@ -92,7 +109,6 @@ static void ListJobs(BackupManager manager, LanguageManager lang)
     }
 }
 
-// ── Execute single job ────────────────────────────────────────────────────────
 static void ExecuteJob(BackupManager manager, LanguageManager lang)
 {
     ListJobs(manager, lang);
@@ -106,7 +122,6 @@ static void ExecuteJob(BackupManager manager, LanguageManager lang)
     else Console.WriteLine(lang.Get("invalid_number"));
 }
 
-// ── Remove job ────────────────────────────────────────────────────────────────
 static void RemoveJob(BackupManager manager, LanguageManager lang)
 {
     ListJobs(manager, lang);
