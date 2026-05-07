@@ -122,12 +122,20 @@ namespace EasySave.Services
                 job.SetStrategy(new DiffBackupStrategy());
         }
 
+        /// <summary>
+        /// Serializes the current job list to <c>config.json</c>.
+        /// Called automatically after every add or remove operation.
+        /// </summary>
         public void SaveConfig()
         {
             string json = JsonSerializer.Serialize(_jobs, new JsonSerializerOptions { WriteIndented = true });
             File.WriteAllText(_configPath, json);
         }
 
+        /// <summary>
+        /// Loads persisted jobs from <c>config.json</c> on startup.
+        /// Silently skips if the file does not exist yet.
+        /// </summary>
         public void LoadConfig()
         {
             if (!File.Exists(_configPath)) return;

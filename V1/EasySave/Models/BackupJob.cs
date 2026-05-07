@@ -7,6 +7,10 @@ using EasySave.Strategies;
 
 namespace EasySave.Models
 {
+    /// <summary>
+    /// Represents a backup job configuration: name, source/target paths, and backup type.
+    /// Uses the Strategy pattern to delegate the actual copy logic at runtime.
+    /// </summary>
     public class BackupJob
     {
         public string Name { get; set; } = string.Empty;
@@ -16,6 +20,7 @@ namespace EasySave.Models
 
         private IBackupStrategy? _strategy;
 
+        // Parameterless constructor required for JSON deserialization
         public BackupJob() { }
 
         public BackupJob(string name, string sourcePath, string targetPath, BackupType type)
@@ -26,13 +31,23 @@ namespace EasySave.Models
             Type = type;
         }
 
+        /// <summary>
+        /// Injects the copy strategy (full or differential) before execution.
+        /// </summary>
         public void SetStrategy(IBackupStrategy strategy)
         {
             _strategy = strategy;
         }
 
+        /// <summary>
+        /// Returns a default inactive state snapshot for this job.
+        /// </summary>
         public StateEntry GetState() => new StateEntry { JobName = Name, Status = "Inactive" };
 
+        /// <summary>
+        /// Runs the backup: enumerates source files, copies each one via the strategy,
+        /// logs the transfer, and updates the live state file after every file.
+        /// </summary>
         public void Execute(Logger logger, StateManager stateManager)
         {
             if (_strategy == null) return;
@@ -42,6 +57,7 @@ namespace EasySave.Models
             int remainingFiles = files.Count;
             long remainingSize = totalSize;
 
+            // Write initial state before the first file is processed
             stateManager.UpdateState(new StateEntry
             {
                 JobName = Name,
@@ -73,6 +89,7 @@ namespace EasySave.Models
                 remainingFiles--;
                 remainingSize -= fileSize;
 
+                // Update state after each file so external tools see live progress
                 stateManager.UpdateState(new StateEntry
                 {
                     JobName = Name,
@@ -89,6 +106,10 @@ namespace EasySave.Models
             stateManager.ResetState(Name);
         }
 
+        /// <summary>
+        /// Recursively collects all file paths under <paramref name="path"/>.
+        /// Returns an empty list if the directory does not exist.
+        /// </summary>
         private List<string> GetAllFiles(string path)
         {
             List<string> files = new List<string>();
@@ -99,6 +120,9 @@ namespace EasySave.Models
             return files;
         }
 
+        /// <summary>
+        /// Sums the byte size of every file in the list.
+        /// </summary>
         private long GetTotalSize(List<string> files)
         {
             long total = 0;
