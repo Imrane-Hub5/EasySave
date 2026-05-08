@@ -32,7 +32,9 @@ namespace EasySave.Services
             { "backup_done",      "Backup completed." },
             { "all_done",         "All backups completed." },
             { "invalid_choice",   "Invalid choice." },
-            { "invalid_number",   "Invalid number." }
+            { "invalid_number",   "Invalid number." },
+			{ "log_format",      "Choose log format (1=JSON, 2=XML): " },
+			{ "log_format_set",  "Log format saved." }
         };
 
         private readonly Dictionary<string, string> _translationsFR = new Dictionary<string, string>
@@ -57,7 +59,9 @@ namespace EasySave.Services
             { "backup_done",      "Sauvegarde termin\u00e9e." },
             { "all_done",         "Toutes les sauvegardes sont termin\u00e9es." },
             { "invalid_choice",   "Choix invalide." },
-            { "invalid_number",   "Num\u00e9ro invalide." }
+            { "invalid_number",   "Num\u00e9ro invalide." },
+			{ "log_format",      "Choisir le format de log (1=JSON, 2=XML) : " },
+			{ "log_format_set",  "Format de log enregistré." }
         };
 
         public LanguageManager(Language locale = Language.English)
