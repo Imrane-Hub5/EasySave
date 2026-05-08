@@ -6,6 +6,7 @@ using EasyLog;
 using EasySave.Models;
 using EasySave.Strategies;
 
+
 namespace EasySave.Services
 {
     /// <summary>
@@ -19,9 +20,11 @@ namespace EasySave.Services
         private readonly string _configPath;
         private readonly Logger _logger;
         private readonly StateManager _stateManager;
+        private readonly ILogFormatter _formatter;  // ← ajoute ça
 
-        private BackupManager()
+        private BackupManager(ILogFormatter formatter)
         {
+            _formatter = formatter;
             string dir = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
                 "EasySave"
@@ -33,13 +36,12 @@ namespace EasySave.Services
             LoadConfig();
         }
 
-        public static BackupManager GetInstance()
+        public static BackupManager GetInstance(ILogFormatter? formatter = null)
         {
             if (_instance == null)
-                _instance = new BackupManager();
+                _instance = new BackupManager(formatter ?? new JsonFormatter());
             return _instance;
         }
-
         public List<BackupJob> Jobs => _jobs;
 
         /// <summary>
