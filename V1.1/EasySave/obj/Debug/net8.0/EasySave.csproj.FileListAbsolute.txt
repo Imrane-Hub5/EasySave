@@ -17,3 +17,12 @@ C:\Users\boughzalaahmed\source\repos\EasySave\V1\EasySave\obj\Debug\net8.0\refin
 C:\Users\boughzalaahmed\source\repos\EasySave\V1\EasySave\obj\Debug\net8.0\EasySave.pdb
 C:\Users\boughzalaahmed\source\repos\EasySave\V1\EasySave\obj\Debug\net8.0\EasySave.genruntimeconfig.cache
 C:\Users\boughzalaahmed\source\repos\EasySave\V1\EasySave\obj\Debug\net8.0\ref\EasySave.dll
+C:\Users\quent\Desktop\Cesi\Bloc Génie logiciel\v1.1\V1.1\EasySave\obj\Debug\net8.0\EasySave.csproj.AssemblyReference.cache
+C:\Users\quent\Desktop\Cesi\Bloc Génie logiciel\v1.1\V1.1\EasySave\obj\Debug\net8.0\EasySave.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\quent\Desktop\Cesi\Bloc Génie logiciel\v1.1\V1.1\EasySave\obj\Debug\net8.0\EasySave.AssemblyInfoInputs.cache
+C:\Users\quent\Desktop\Cesi\Bloc Génie logiciel\v1.1\V1.1\EasySave\obj\Debug\net8.0\EasySave.AssemblyInfo.cs
+C:\Users\quent\Desktop\Cesi\Bloc Génie logiciel\v1.1\V1.1\EasySave\obj\Debug\net8.0\EasySave.csproj.CoreCompileInputs.cache
+C:\Users\quent\Desktop\Cesi\Bloc Génie logiciel\v1.1\V1.1\EasySave\obj\Debug\net8.0\EasySave.sourcelink.json
+C:\Users\quent\Desktop\Cesi\Bloc Génie logiciel\v1.1\V1.1\EasySave\obj\Debug\net8.0\EasySave.dll
+C:\Users\quent\Desktop\Cesi\Bloc Génie logiciel\v1.1\V1.1\EasySave\obj\Debug\net8.0\refint\EasySave.dll
+C:\Users\quent\Desktop\Cesi\Bloc Génie logiciel\v1.1\V1.1\EasySave\obj\Debug\net8.0\EasySave.pdb

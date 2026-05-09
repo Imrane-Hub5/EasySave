@@ -4,13 +4,13 @@ using System.IO;
 namespace EasyLog
 {
     /// <summary>
-    /// Singleton logger — delegates formatting to ILogFormatter (Strategy pattern)
+    /// Singleton logger - writes daily log files
     /// </summary>
     public class Logger
     {
         private static Logger? _instance;
         private readonly string _logDir;
-        private ILogFormatter? _formatter;
+        private ILogFormatter _formatter = new JsonFormatter();
 
         private Logger()
         {
@@ -29,7 +29,7 @@ namespace EasyLog
         }
 
         /// <summary>
-        /// Sets the formatter to use (JSON or XML)
+        /// Sets the log formatter (JSON or XML)
         /// </summary>
         public void SetFormatter(ILogFormatter formatter)
         {
@@ -41,18 +41,10 @@ namespace EasyLog
         /// </summary>
         public void Log(LogEntry entry)
         {
-            if (_formatter == null)
-                throw new InvalidOperationException("No formatter set. Call SetFormatter() first.");
-
-            string filePath = Path.Combine(
-                _logDir,
-                DateTime.Now.ToString("yyyy-MM-dd") + _formatter.GetExtension()
-            );
-
+            string ext = _formatter.GetExtension();
+            string filePath = Path.Combine(_logDir, DateTime.Now.ToString("yyyy-MM-dd") + "." + ext);
             string content = _formatter.Format(entry);
             File.AppendAllText(filePath, content + Environment.NewLine);
         }
-
-        public string GetLogPath() => _logDir;
     }
 }

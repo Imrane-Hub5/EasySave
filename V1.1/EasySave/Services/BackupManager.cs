@@ -31,8 +31,9 @@ namespace EasySave.Services
             _logger = Logger.GetInstance();
             _stateManager = new StateManager();
 
-            // Load log format from settings (NEW v1.1)
-            ILogFormatter formatter = Settings.LogFormat == "XML"
+            // Load log formatter from settings (Strategy Pattern)
+            Settings settings = Settings.Load();
+            ILogFormatter formatter = settings.LogFormat == "XML"
                 ? new XmlFormatter()
                 : new JsonFormatter();
             _logger.SetFormatter(formatter);
@@ -49,9 +50,6 @@ namespace EasySave.Services
 
         public List<BackupJob> Jobs => _jobs;
 
-        /// <summary>
-        /// Adds a backup job if max not reached
-        /// </summary>
         public bool AddJob(BackupJob job)
         {
             if (_jobs.Count >= _maxJobs) return false;
@@ -60,9 +58,6 @@ namespace EasySave.Services
             return true;
         }
 
-        /// <summary>
-        /// Removes a backup job by index
-        /// </summary>
         public bool RemoveJob(int index)
         {
             if (index < 0 || index >= _jobs.Count) return false;
@@ -71,9 +66,6 @@ namespace EasySave.Services
             return true;
         }
 
-        /// <summary>
-        /// Executes a single backup job by index
-        /// </summary>
         public void RunJob(int index)
         {
             if (index < 0 || index >= _jobs.Count) return;
@@ -82,9 +74,6 @@ namespace EasySave.Services
             job.Execute(_logger, _stateManager);
         }
 
-        /// <summary>
-        /// Executes all backup jobs sequentially
-        /// </summary>
         public void RunAll()
         {
             foreach (BackupJob job in _jobs)
@@ -94,9 +83,6 @@ namespace EasySave.Services
             }
         }
 
-        /// <summary>
-        /// Executes jobs from CLI args: "1-3" or "1;3"
-        /// </summary>
         public void ExecuteRange(string args)
         {
             if (args.Contains("-"))
@@ -118,9 +104,6 @@ namespace EasySave.Services
             }
         }
 
-        /// <summary>
-        /// Assigns the correct strategy based on backup type
-        /// </summary>
         private void AssignStrategy(BackupJob job)
         {
             if (job.Type == BackupType.Complete)
@@ -129,18 +112,12 @@ namespace EasySave.Services
                 job.SetStrategy(new DiffBackupStrategy());
         }
 
-        /// <summary>
-        /// Serializes the current job list to config.json
-        /// </summary>
         public void SaveConfig()
         {
             string json = JsonSerializer.Serialize(_jobs, new JsonSerializerOptions { WriteIndented = true });
             File.WriteAllText(_configPath, json);
         }
 
-        /// <summary>
-        /// Loads persisted jobs from config.json on startup
-        /// </summary>
         public void LoadConfig()
         {
             if (!File.Exists(_configPath)) return;
