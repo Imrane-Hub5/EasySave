@@ -1,10 +1,13 @@
 using System;
 using EasySave.Models;
 using EasySave.Services;
-using EasyLog; 
+using EasyLog;
 
-// --- V1.1 : Initial configuration ---
-ILogFormatter selectedFormatter = SelectLogFormat();
+// --- Language selection ---
+LanguageManager lang = SelectLanguage();
+
+// --- V1.1 : Log format selection ---
+ILogFormatter selectedFormatter = SelectLogFormat(lang);
 Logger.GetInstance().SetFormatter(selectedFormatter);
 
 if (args.Length > 0)
@@ -13,8 +16,6 @@ if (args.Length > 0)
     return;
 }
 
-// --- Interactive mode ---
-LanguageManager lang = SelectLanguage();
 BackupManager manager = BackupManager.GetInstance();
 bool running = true;
 
@@ -44,23 +45,6 @@ while (running)
     }
 }
 
-// --- Logic for V1.1 Log Format Selection ---
-static ILogFormatter SelectLogFormat()
-{
-    Console.WriteLine("Select Log Format / Choisissez le format des logs:");
-    Console.WriteLine("1. JSON");
-    Console.WriteLine("2. XML");
-    Console.Write("> ");
-    string? choice = Console.ReadLine();
-    Console.Clear();
-    
-    if (choice == "2")
-    {
-        return new XmlFormatter(); 
-    }
-    return new JsonFormatter(); 
-}
-
 static LanguageManager SelectLanguage()
 {
     Console.WriteLine("Select language / Choisissez la langue:");
@@ -71,6 +55,17 @@ static LanguageManager SelectLanguage()
     Language locale = choice == "2" ? Language.French : Language.English;
     Console.Clear();
     return new LanguageManager(locale);
+}
+
+static ILogFormatter SelectLogFormat(LanguageManager lang)
+{
+    Console.WriteLine(lang.Get("log_format"));
+    Console.WriteLine("1. JSON");
+    Console.WriteLine("2. XML");
+    Console.Write("> ");
+    string? choice = Console.ReadLine();
+    Console.Clear();
+    return choice == "2" ? new XmlFormatter() : new JsonFormatter();
 }
 
 static void ShowMenu(LanguageManager lang)

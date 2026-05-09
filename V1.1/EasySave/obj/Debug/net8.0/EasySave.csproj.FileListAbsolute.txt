@@ -26,3 +26,13 @@ C:\Users\quent\Desktop\Cesi\Bloc Génie logiciel\v1.1\V1.1\EasySave\obj\Debug\ne
 C:\Users\quent\Desktop\Cesi\Bloc Génie logiciel\v1.1\V1.1\EasySave\obj\Debug\net8.0\EasySave.dll
 C:\Users\quent\Desktop\Cesi\Bloc Génie logiciel\v1.1\V1.1\EasySave\obj\Debug\net8.0\refint\EasySave.dll
 C:\Users\quent\Desktop\Cesi\Bloc Génie logiciel\v1.1\V1.1\EasySave\obj\Debug\net8.0\EasySave.pdb
+C:\Users\quent\Desktop\Cesi\Bloc Génie logiciel\v1.1\V1.1\EasySave\bin\Debug\net8.0\EasySave.exe
+C:\Users\quent\Desktop\Cesi\Bloc Génie logiciel\v1.1\V1.1\EasySave\bin\Debug\net8.0\EasySave.deps.json
+C:\Users\quent\Desktop\Cesi\Bloc Génie logiciel\v1.1\V1.1\EasySave\bin\Debug\net8.0\EasySave.runtimeconfig.json
+C:\Users\quent\Desktop\Cesi\Bloc Génie logiciel\v1.1\V1.1\EasySave\bin\Debug\net8.0\EasySave.dll
+C:\Users\quent\Desktop\Cesi\Bloc Génie logiciel\v1.1\V1.1\EasySave\bin\Debug\net8.0\EasySave.pdb
+C:\Users\quent\Desktop\Cesi\Bloc Génie logiciel\v1.1\V1.1\EasySave\bin\Debug\net8.0\EasyLog.dll
+C:\Users\quent\Desktop\Cesi\Bloc Génie logiciel\v1.1\V1.1\EasySave\bin\Debug\net8.0\EasyLog.pdb
+C:\Users\quent\Desktop\Cesi\Bloc Génie logiciel\v1.1\V1.1\EasySave\obj\Debug\net8.0\EasySave.csproj.Up2Date
+C:\Users\quent\Desktop\Cesi\Bloc Génie logiciel\v1.1\V1.1\EasySave\obj\Debug\net8.0\EasySave.genruntimeconfig.cache
+C:\Users\quent\Desktop\Cesi\Bloc Génie logiciel\v1.1\V1.1\EasySave\obj\Debug\net8.0\ref\EasySave.dll
