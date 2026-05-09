@@ -30,6 +30,13 @@ namespace EasySave.Services
             _configPath = Path.Combine(dir, "config.json");
             _logger = Logger.GetInstance();
             _stateManager = new StateManager();
+
+            // Load log format from settings (NEW v1.1)
+            ILogFormatter formatter = Settings.LogFormat == "XML"
+                ? new XmlFormatter()
+                : new JsonFormatter();
+            _logger.SetFormatter(formatter);
+
             LoadConfig();
         }
 
@@ -123,8 +130,7 @@ namespace EasySave.Services
         }
 
         /// <summary>
-        /// Serializes the current job list to <c>config.json</c>.
-        /// Called automatically after every add or remove operation.
+        /// Serializes the current job list to config.json
         /// </summary>
         public void SaveConfig()
         {
@@ -133,8 +139,7 @@ namespace EasySave.Services
         }
 
         /// <summary>
-        /// Loads persisted jobs from <c>config.json</c> on startup.
-        /// Silently skips if the file does not exist yet.
+        /// Loads persisted jobs from config.json on startup
         /// </summary>
         public void LoadConfig()
         {
