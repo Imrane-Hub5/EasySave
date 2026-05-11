@@ -1,15 +1,40 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿using System;
+using System.Windows;
+using EasySave.Models;
+using EasySave.Services;
+using EasyLog;
 
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net10.0-windows</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <UseWPF>true</UseWPF>
-  </PropertyGroup>
+namespace EasySaveUI
+{
+/// <summary>
+	/// Entry point — launches WPF application or runs backup from command line
+	///
+</summary>
+public class Program
+{
+[STAThread]
+public static void Main(string[] args)
+{
+// Load settings
+Settings settings = Settings.Load();
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\EasySave\EasySave.csproj" />
-  </ItemGroup>
+// Set log formatter based on settings
+ILogFormatter formatter = settings.LogFormat == "XML"
+? new XmlFormatter()
+: new JsonFormatter();
+Logger.GetInstance().SetFormatter(formatter);
 
-</Project>
+// If launched with args (ex: EasySave.exe 1-3)
+if (args.Length > 0)
+{
+BackupManager.GetInstance().ExecuteRange(args[0]);
+return;
+}
+
+// Launch WPF
+Application app = new Application();
+MainWindow window = new MainWindow();
+app.Run(window);
+}
+}
+}

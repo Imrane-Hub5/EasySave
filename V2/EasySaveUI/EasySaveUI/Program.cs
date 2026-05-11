@@ -1,9 +1,8 @@
-using EasyLog;
-using EasySave.Models;
-using EasySave.Services;
 using System;
 using System.Windows;
-using static System.Net.Mime.MediaTypeNames;
+using EasySave.Models;
+using EasySave.Services;
+using EasyLog;
 
 namespace EasySaveUI
 {
