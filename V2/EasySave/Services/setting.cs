@@ -3,7 +3,7 @@
 namespace EasySave.Services
 {
     /// <summary>
-    /// Stores user preferences (log format JSON or XML)
+    /// Stores user preferences (log format, business software, encrypted extensions)
     /// Saved in AppData\Roaming\EasySave\settings.json
     /// </summary>
     public class Settings
@@ -15,6 +15,12 @@ namespace EasySave.Services
 
         // "JSON" or "XML"
         public string LogFormat { get; set; } = "JSON";
+
+        // Business software to detect 
+        public string BusinessSoftware { get; set; } = string.Empty;
+
+        // File extensions to encrypt
+        public List<string> EncryptedExtensions { get; set; } = new();
 
         /// <summary>
         /// Loads settings from settings.json

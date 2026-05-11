@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\quent\\Desktop\\Cesi\\Bloc Génie logiciel\\v1.1\\V1\\EasyLog\\EasyLog.csproj": {}
+    "C:\\A3\\GL\\Projet GL\\V2\\V1\\EasyLog\\EasyLog.csproj": {}
   },
   "projects": {
-    "C:\\Users\\quent\\Desktop\\Cesi\\Bloc Génie logiciel\\v1.1\\V1\\EasyLog\\EasyLog.csproj": {
+    "C:\\A3\\GL\\Projet GL\\V2\\V1\\EasyLog\\EasyLog.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\quent\\Desktop\\Cesi\\Bloc Génie logiciel\\v1.1\\V1\\EasyLog\\EasyLog.csproj",
+        "projectUniqueName": "C:\\A3\\GL\\Projet GL\\V2\\V1\\EasyLog\\EasyLog.csproj",
         "projectName": "EasyLog",
-        "projectPath": "C:\\Users\\quent\\Desktop\\Cesi\\Bloc Génie logiciel\\v1.1\\V1\\EasyLog\\EasyLog.csproj",
-        "packagesPath": "C:\\Users\\quent\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\quent\\Desktop\\Cesi\\Bloc Génie logiciel\\v1.1\\V1\\EasyLog\\obj\\",
+        "projectPath": "C:\\A3\\GL\\Projet GL\\V2\\V1\\EasyLog\\EasyLog.csproj",
+        "packagesPath": "C:\\Users\\boughzalaahmed\\.nuget\\packages\\",
+        "outputPath": "C:\\A3\\GL\\Projet GL\\V2\\V1\\EasyLog\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\quent\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\boughzalaahmed\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -26,7 +26,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
