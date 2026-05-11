@@ -3,15 +3,16 @@ using System.Windows.Input;
 
 namespace EasySaveUI
 {
-    /// <summary>
-    /// Generic ICommand implementation for MVVM
-    /// </summary>
     public class RelayCommand : ICommand
     {
         private readonly Action _execute;
         private readonly Func<bool>? _canExecute;
 
-        public event EventHandler? CanExecuteChanged;
+        public event EventHandler? CanExecuteChanged
+        {
+            add => System.Windows.Input.CommandManager.RequerySuggested += value;
+            remove => System.Windows.Input.CommandManager.RequerySuggested -= value;
+        }
 
         public RelayCommand(Action execute, Func<bool>? canExecute = null)
         {

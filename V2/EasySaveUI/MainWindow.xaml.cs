@@ -33,7 +33,7 @@ namespace EasySaveUI
             addWindow.Owner = this;
             if (addWindow.ShowDialog() == true)
             {
-                _backupManager.AddJob(addWindow.NewJob);
+                _backupManager.AddJob(addWindow.NewJob!);
                 RefreshJobList();
             }
         }

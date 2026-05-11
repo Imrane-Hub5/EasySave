@@ -8,7 +8,7 @@ namespace EasySave.ViewModels
 {
     public class MainViewModel : INotifyPropertyChanged
     {
-        private ObservableCollection<BackupJob> _jobs;
+        private ObservableCollection<BackupJob> _jobs = null!;
         private readonly BackupManager _manager;
         private readonly BusinessSoftwareService _softwareService;
 
@@ -27,8 +27,8 @@ namespace EasySave.ViewModels
             Jobs = new ObservableCollection<BackupJob>(_manager.Jobs);
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged([CallerMemberName] string name = null)
+        public event PropertyChangedEventHandler? PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string? name = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
