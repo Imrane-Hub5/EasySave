@@ -13,5 +13,6 @@ namespace EasyLog
         public string TargetPath { get; set; } = string.Empty;
         public long FileSize { get; set; }
         public long TransferTime { get; set; } // negative if error
+        public long EncryptionTime { get; set; } // 0=no encryption, >0=ms, <0=error
     }
 }
