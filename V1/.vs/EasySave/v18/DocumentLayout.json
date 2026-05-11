@@ -1,12 +1,82 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\A3\\GL\\Projet GL\\V2\\V1\\",
-  "Documents": [],
+  "WorkspaceRootPath": "C:\\A3\\GL\\projet\\V1\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{261D81CA-2010-D02D-6B1D-26A68663FBC6}|..\\V2\\EasySave\\EasySave.csproj|c:\\a3\\gl\\projet\\v2\\easysave\\services\\setting.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{261D81CA-2010-D02D-6B1D-26A68663FBC6}|..\\V2\\EasySave\\EasySave.csproj|c:\\a3\\gl\\projet\\v2\\easysave\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\A3\\GL\\projet\\V2\\EasySaveUI\\EasySaveUI\\Program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\A3\\GL\\projet\\V2\\EasySaveUI\\EasySaveUI\\EasySaveUI.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "setting.cs",
+              "DocumentMoniker": "C:\\A3\\GL\\projet\\V2\\EasySave\\Services\\setting.cs",
+              "RelativeDocumentMoniker": "..\\V2\\EasySave\\Services\\setting.cs",
+              "ToolTip": "C:\\A3\\GL\\projet\\V2\\EasySave\\Services\\setting.cs",
+              "RelativeToolTip": "..\\V2\\EasySave\\Services\\setting.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-11T08:00:39.52Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\A3\\GL\\projet\\V2\\EasySave\\Program.cs",
+              "RelativeDocumentMoniker": "..\\V2\\EasySave\\Program.cs",
+              "ToolTip": "C:\\A3\\GL\\projet\\V2\\EasySave\\Program.cs",
+              "RelativeToolTip": "..\\V2\\EasySave\\Program.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAACcAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-11T07:51:33.109Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "EasySaveUI.csproj",
+              "DocumentMoniker": "C:\\A3\\GL\\projet\\V2\\EasySaveUI\\EasySaveUI\\EasySaveUI.csproj",
+              "RelativeDocumentMoniker": "..\\V2\\EasySaveUI\\EasySaveUI\\EasySaveUI.csproj",
+              "ToolTip": "C:\\A3\\GL\\projet\\V2\\EasySaveUI\\EasySaveUI\\EasySaveUI.csproj",
+              "RelativeToolTip": "..\\V2\\EasySaveUI\\EasySaveUI\\EasySaveUI.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACcAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-05-11T07:19:12.628Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\A3\\GL\\projet\\V2\\EasySaveUI\\EasySaveUI\\Program.cs",
+              "RelativeDocumentMoniker": "..\\V2\\EasySaveUI\\EasySaveUI\\Program.cs",
+              "ToolTip": "C:\\A3\\GL\\projet\\V2\\EasySaveUI\\EasySaveUI\\Program.cs",
+              "RelativeToolTip": "..\\V2\\EasySaveUI\\EasySaveUI\\Program.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABMAAAAyAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-11T07:16:34.135Z"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
