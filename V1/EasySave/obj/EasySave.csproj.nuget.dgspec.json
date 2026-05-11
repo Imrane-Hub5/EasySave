@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\A3\\GL\\Projet GL\\V2\\V1\\EasySave\\EasySave.csproj": {}
+    "C:\\A3\\GL\\projet\\V1\\EasySave\\EasySave.csproj": {}
   },
   "projects": {
-    "C:\\A3\\GL\\Projet GL\\V2\\V1\\EasyLog\\EasyLog.csproj": {
+    "C:\\A3\\GL\\projet\\V1\\EasyLog\\EasyLog.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\A3\\GL\\Projet GL\\V2\\V1\\EasyLog\\EasyLog.csproj",
+        "projectUniqueName": "C:\\A3\\GL\\projet\\V1\\EasyLog\\EasyLog.csproj",
         "projectName": "EasyLog",
-        "projectPath": "C:\\A3\\GL\\Projet GL\\V2\\V1\\EasyLog\\EasyLog.csproj",
+        "projectPath": "C:\\A3\\GL\\projet\\V1\\EasyLog\\EasyLog.csproj",
         "packagesPath": "C:\\Users\\boughzalaahmed\\.nuget\\packages\\",
-        "outputPath": "C:\\A3\\GL\\Projet GL\\V2\\V1\\EasyLog\\obj\\",
+        "outputPath": "C:\\A3\\GL\\projet\\V1\\EasyLog\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -69,14 +69,14 @@
         }
       }
     },
-    "C:\\A3\\GL\\Projet GL\\V2\\V1\\EasySave\\EasySave.csproj": {
+    "C:\\A3\\GL\\projet\\V1\\EasySave\\EasySave.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\A3\\GL\\Projet GL\\V2\\V1\\EasySave\\EasySave.csproj",
+        "projectUniqueName": "C:\\A3\\GL\\projet\\V1\\EasySave\\EasySave.csproj",
         "projectName": "EasySave",
-        "projectPath": "C:\\A3\\GL\\Projet GL\\V2\\V1\\EasySave\\EasySave.csproj",
+        "projectPath": "C:\\A3\\GL\\projet\\V1\\EasySave\\EasySave.csproj",
         "packagesPath": "C:\\Users\\boughzalaahmed\\.nuget\\packages\\",
-        "outputPath": "C:\\A3\\GL\\Projet GL\\V2\\V1\\EasySave\\obj\\",
+        "outputPath": "C:\\A3\\GL\\projet\\V1\\EasySave\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -97,8 +97,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\A3\\GL\\Projet GL\\V2\\V1\\EasyLog\\EasyLog.csproj": {
-                "projectPath": "C:\\A3\\GL\\Projet GL\\V2\\V1\\EasyLog\\EasyLog.csproj"
+              "C:\\A3\\GL\\projet\\V1\\EasyLog\\EasyLog.csproj": {
+                "projectPath": "C:\\A3\\GL\\projet\\V1\\EasyLog\\EasyLog.csproj"
               }
             }
           }

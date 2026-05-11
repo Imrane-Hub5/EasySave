@@ -22,3 +22,15 @@ C:\Users\quent\Desktop\Cesi\Bloc Génie logiciel\v1.1\V1\EasyLog\obj\Debug\net8.
 C:\Users\quent\Desktop\Cesi\Bloc Génie logiciel\v1.1\V1\EasyLog\obj\Debug\net8.0\refint\EasyLog.dll
 C:\Users\quent\Desktop\Cesi\Bloc Génie logiciel\v1.1\V1\EasyLog\obj\Debug\net8.0\EasyLog.pdb
 C:\Users\quent\Desktop\Cesi\Bloc Génie logiciel\v1.1\V1\EasyLog\obj\Debug\net8.0\ref\EasyLog.dll
+C:\A3\GL\projet\V1\EasyLog\bin\Debug\net8.0\EasyLog.deps.json
+C:\A3\GL\projet\V1\EasyLog\bin\Debug\net8.0\EasyLog.dll
+C:\A3\GL\projet\V1\EasyLog\bin\Debug\net8.0\EasyLog.pdb
+C:\A3\GL\projet\V1\EasyLog\obj\Debug\net8.0\EasyLog.GeneratedMSBuildEditorConfig.editorconfig
+C:\A3\GL\projet\V1\EasyLog\obj\Debug\net8.0\EasyLog.AssemblyInfoInputs.cache
+C:\A3\GL\projet\V1\EasyLog\obj\Debug\net8.0\EasyLog.AssemblyInfo.cs
+C:\A3\GL\projet\V1\EasyLog\obj\Debug\net8.0\EasyLog.csproj.CoreCompileInputs.cache
+C:\A3\GL\projet\V1\EasyLog\obj\Debug\net8.0\EasyLog.sourcelink.json
+C:\A3\GL\projet\V1\EasyLog\obj\Debug\net8.0\EasyLog.dll
+C:\A3\GL\projet\V1\EasyLog\obj\Debug\net8.0\refint\EasyLog.dll
+C:\A3\GL\projet\V1\EasyLog\obj\Debug\net8.0\EasyLog.pdb
+C:\A3\GL\projet\V1\EasyLog\obj\Debug\net8.0\ref\EasyLog.dll
