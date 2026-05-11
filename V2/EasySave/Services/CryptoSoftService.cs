@@ -15,6 +15,14 @@ namespace EasySave.Services
             _cryptoSoftPath = cryptoSoftPath;
         }
 
+        public bool ShouldEncrypt(string filePath, List<string> encryptedExtensions)
+        {
+            if (string.IsNullOrEmpty(_cryptoSoftPath) || encryptedExtensions.Count == 0)
+                return false;
+            string ext = Path.GetExtension(filePath).ToLowerInvariant();
+            return encryptedExtensions.Contains(ext);
+        }
+
         /// <summary>
         /// Encrypts a file using CryptoSoft.
         /// Returns encryption time in ms, or negative value on error.

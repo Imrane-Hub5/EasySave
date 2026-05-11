@@ -28,7 +28,7 @@ namespace EasySaveUI
         public string TargetPath => _job.TargetPath;
 
         // Type (Full or Differential)
-        public string Type => _job.Type;
+        public string Type => _job.Type.ToString();
 
         // Status (Active / Inactive)
         public string Status

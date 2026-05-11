@@ -47,11 +47,11 @@ namespace EasySave.Models
 
             // Load settings
             Settings settings = Settings.Load();
-            BusinessSoftwareService bss = new BusinessSoftwareService(settings.BusinessSoftware);
+            BusinessSoftwareService bss = new BusinessSoftwareService();
             CryptoSoftService crypto = new CryptoSoftService(settings.CryptoSoftPath);
 
             // Check business software before starting
-            if (bss.IsRunning())
+            if (bss.IsBusinessSoftwareRunning(settings.BusinessSoftware))
             {
                 logger.Log(new LogEntry
                 {
@@ -84,7 +84,7 @@ namespace EasySave.Models
             foreach (string sourceFile in files)
             {
                 // Check business software during execution
-                if (bss.IsRunning())
+                if (bss.IsBusinessSoftwareRunning(settings.BusinessSoftware))
                 {
                     logger.Log(new LogEntry
                     {
@@ -109,7 +109,7 @@ namespace EasySave.Models
 
                 // Encrypt if needed
                 long encryptionTime = 0;
-                if (crypto.ShouldEncrypt(sourceFile, settings.EncryptedExtensions))
+                if (crypto.ShouldEncrypt(sourceFile, settings.EncryptedExtensions ?? new List<string>()))
                     encryptionTime = crypto.EncryptFile(targetFile);
 
                 // Write log

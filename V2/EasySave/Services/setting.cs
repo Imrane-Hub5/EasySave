@@ -22,6 +22,9 @@ namespace EasySave.Services
         // File extensions to encrypt
         public List<string> EncryptedExtensions { get; set; } = new();
 
+        // Path to the CryptoSoft executable
+        public string CryptoSoftPath { get; set; } = string.Empty;
+
         /// <summary>
         /// Loads settings from settings.json
         /// If file does not exist, returns default settings (JSON)
