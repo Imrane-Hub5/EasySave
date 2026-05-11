@@ -9,13 +9,12 @@ using EasySave.Strategies;
 namespace EasySave.Services
 {
     /// <summary>
-    /// Singleton - manages all backup jobs (max 5)
+    /// Singleton - manages unlimited backup jobs
     /// </summary>
     public class BackupManager
     {
         private static BackupManager? _instance;
         private readonly List<BackupJob> _jobs = new();
-        private readonly int _maxJobs = 5;
         private readonly string _configPath;
         private readonly Logger _logger;
         private readonly StateManager _stateManager;
@@ -50,12 +49,13 @@ namespace EasySave.Services
 
         public List<BackupJob> Jobs => _jobs;
 
-        public bool AddJob(BackupJob job)
+        /// <summary>
+        /// Adds a backup job — now unlimited
+        /// </summary>
+        public void AddJob(BackupJob job)
         {
-            if (_jobs.Count >= _maxJobs) return false;
             _jobs.Add(job);
             SaveConfig();
-            return true;
         }
 
         public bool RemoveJob(int index)
