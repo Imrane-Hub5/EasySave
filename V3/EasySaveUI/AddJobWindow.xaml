@@ -1,0 +1,72 @@
+<Window x:Class="EasySaveUI.AddJobWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Add Backup Job" Height="320" Width="500"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="120"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Title -->
+        <TextBlock Grid.Row="0" Grid.ColumnSpan="3"
+                   Text="+ Add Backup Job" FontSize="18" FontWeight="Bold"
+                   Margin="0,0,0,20"/>
+
+        <!-- Job Name -->
+        <TextBlock Grid.Row="1" Grid.Column="0"
+                   Text="Job Name :" VerticalAlignment="Center" Margin="0,0,0,12"/>
+        <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
+                 x:Name="TxtName" Padding="4" Margin="0,0,0,12"/>
+
+        <!-- Source Path -->
+        <TextBlock Grid.Row="2" Grid.Column="0"
+                   Text="Source Path :" VerticalAlignment="Center" Margin="0,0,0,12"/>
+        <TextBox Grid.Row="2" Grid.Column="1"
+                 x:Name="TxtSource" Padding="4" Margin="0,0,5,12"/>
+        <Button Grid.Row="2" Grid.Column="2"
+                Content="..." Width="30" Margin="0,0,0,12"
+                Click="BtnBrowseSource_Click"/>
+
+        <!-- Target Path -->
+        <TextBlock Grid.Row="3" Grid.Column="0"
+                   Text="Target Path :" VerticalAlignment="Center" Margin="0,0,0,12"/>
+        <TextBox Grid.Row="3" Grid.Column="1"
+                 x:Name="TxtTarget" Padding="4" Margin="0,0,5,12"/>
+        <Button Grid.Row="3" Grid.Column="2"
+                Content="..." Width="30" Margin="0,0,0,12"
+                Click="BtnBrowseTarget_Click"/>
+
+        <!-- Backup Type -->
+        <TextBlock Grid.Row="4" Grid.Column="0"
+                   Text="Backup Type :" VerticalAlignment="Center" Margin="0,0,0,12"/>
+        <ComboBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2"
+                  x:Name="CmbType" Margin="0,0,0,12">
+            <ComboBoxItem IsSelected="True">Complete</ComboBoxItem>
+            <ComboBoxItem>Differential</ComboBoxItem>
+        </ComboBox>
+
+        <!-- Buttons -->
+        <StackPanel Grid.Row="6" Grid.ColumnSpan="3"
+                    Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="Cancel" Width="80" Margin="0,0,10,0"
+                    Click="BtnCancel_Click" Padding="6,4"/>
+            <Button Content="Add" Width="80"
+                    Click="BtnAdd_Click" Padding="6,4"/>
+        </StackPanel>
+    </Grid>
+</Window>
