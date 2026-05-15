@@ -1,12 +1,18 @@
-﻿using System.Windows;
+﻿using System.Collections.ObjectModel;
+using System.Windows;
 using EasySave.Models;
 using EasySave.Services;
 
 namespace EasySaveUI
 {
+    /// <summary>
+    /// Main window — displays backup jobs with real-time progression
+    /// and Pause, Play, Stop controls per job row.
+    /// </summary>
     public partial class MainWindow : Window
     {
         private readonly BackupManager _backupManager;
+        private readonly ObservableCollection<BackupJobViewModel> _jobViewModels = new();
 
         public MainWindow()
         {
@@ -16,16 +22,20 @@ namespace EasySaveUI
         }
 
         /// <summary>
-        /// Refreshes the job list displayed in the DataGrid
+        /// Refreshes the job list — wraps each job in a BackupJobViewModel
+        /// to expose Pause, Play, Stop commands and real-time progression.
         /// </summary>
         private void RefreshJobList()
         {
-            JobsGrid.ItemsSource = null;
-            JobsGrid.ItemsSource = _backupManager.Jobs;
+            _jobViewModels.Clear();
+            foreach (BackupJob job in _backupManager.Jobs)
+                _jobViewModels.Add(new BackupJobViewModel(job));
+
+            JobsGrid.ItemsSource = _jobViewModels;
         }
 
         /// <summary>
-        /// Opens the Add Job dialog
+        /// Opens the Add Job dialog.
         /// </summary>
         private void BtnAdd_Click(object sender, RoutedEventArgs e)
         {
@@ -39,7 +49,7 @@ namespace EasySaveUI
         }
 
         /// <summary>
-        /// Removes the selected job
+        /// Removes the selected job.
         /// </summary>
         private void BtnRemove_Click(object sender, RoutedEventArgs e)
         {
@@ -54,7 +64,7 @@ namespace EasySaveUI
         }
 
         /// <summary>
-        /// Runs the selected job
+        /// Runs the selected job.
         /// </summary>
         private void BtnRun_Click(object sender, RoutedEventArgs e)
         {
@@ -69,7 +79,7 @@ namespace EasySaveUI
         }
 
         /// <summary>
-        /// Runs all jobs
+        /// Runs all jobs in parallel.
         /// </summary>
         private void BtnRunAll_Click(object sender, RoutedEventArgs e)
         {
@@ -78,7 +88,7 @@ namespace EasySaveUI
         }
 
         /// <summary>
-        /// Opens the Settings window
+        /// Opens the Settings window.
         /// </summary>
         private void BtnSettings_Click(object sender, RoutedEventArgs e)
         {
