@@ -1,15 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using EasyLog;
 using EasySave.Services;
 using EasySave.Strategies;
 
 namespace EasySave.Models
 {
-    /// <summary>
-    /// Represents a single backup job
-    /// </summary>
     public class BackupJob
     {
         public string Name { get; set; } = string.Empty;
@@ -36,18 +34,17 @@ namespace EasySave.Models
         public StateEntry GetState() => new StateEntry { JobName = Name, Status = "Inactive" };
 
         /// <summary>
-        /// Executes the backup — supports Pause/Play/Stop via BackupJobController
+        /// Executes the backup asynchronously with parallel and large-file constraint supports
         /// </summary>
-        public void Execute(Logger logger, StateManager stateManager)
+        public async Task ExecuteAsync(Logger logger, StateManager stateManager)
         {
             if (_strategy == null) return;
 
             Settings settings = Settings.Load();
-            BusinessSoftwareService bss = new BusinessSoftwareService();
             CryptoSoftService crypto = new CryptoSoftService(settings.CryptoSoftPath);
 
-            // Check business software before starting
-            if (bss.IsBusinessSoftwareRunning(settings.BusinessSoftware))
+            // Check business software before starting from global flag managed by monitoring thread
+            if (BusinessSoftwareService.IsBlocked)
             {
                 logger.Log(new LogEntry
                 {
@@ -81,18 +78,16 @@ namespace EasySave.Models
 
             foreach (string sourceFile in files)
             {
-                // Check stop
                 if (Controller.Token.IsCancellationRequested)
                 {
                     stateManager.ResetState(Name);
                     return;
                 }
 
-                // Check pause
                 Controller.WaitIfPaused();
 
-                // Check business software during execution
-                if (bss.IsBusinessSoftwareRunning(settings.BusinessSoftware))
+                // Check global business software flag during loop execution
+                if (BusinessSoftwareService.IsBlocked)
                 {
                     logger.Log(new LogEntry
                     {
@@ -112,11 +107,20 @@ namespace EasySave.Models
                 string targetFile = Path.Combine(TargetPath, relativePath);
                 long fileSize = new FileInfo(sourceFile).Length;
 
-                long transferTime = _strategy.Execute(sourceFile, targetFile);
-
+                long transferTime = 0;
                 long encryptionTime = 0;
-                if (crypto.ShouldEncrypt(sourceFile, settings.EncryptedExtensions ?? new List<string>()))
-                    encryptionTime = crypto.EncryptFile(targetFile);
+
+                // Use the static semaphore system to control concurrent transfers of large files
+                await BackupSemaphore.AccessLargeFile(fileSize, async () =>
+                {
+                    // Run the potentially blocking I/O inside a Task block
+                    transferTime = await Task.Run(() => _strategy.Execute(sourceFile, targetFile));
+
+                    if (crypto.ShouldEncrypt(sourceFile, settings.EncryptedExtensions ?? new List<string>()))
+                    {
+                        encryptionTime = await Task.Run(() => crypto.EncryptFile(targetFile));
+                    }
+                });
 
                 logger.Log(new LogEntry
                 {
