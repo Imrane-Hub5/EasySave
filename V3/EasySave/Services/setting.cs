@@ -3,6 +3,16 @@
 namespace EasySave.Services
 {
     /// <summary>
+    /// Log destination mode — Local only, Remote only, or Both.
+    /// </summary>
+    public enum LogDestination
+    {
+        Local,
+        Remote,
+        Both
+    }
+
+    /// <summary>
     /// Stores user preferences (log format, business software, encrypted extensions)
     /// Saved in AppData\Roaming\EasySave\settings.json
     /// </summary>
@@ -16,7 +26,7 @@ namespace EasySave.Services
         // "JSON" or "XML"
         public string LogFormat { get; set; } = "JSON";
 
-        // Business software to detect 
+        // Business software to detect
         public string BusinessSoftware { get; set; } = string.Empty;
 
         // File extensions to encrypt
@@ -25,9 +35,15 @@ namespace EasySave.Services
         // Path to the CryptoSoft executable
         public string CryptoSoftPath { get; set; } = string.Empty;
 
+        // Log destination mode (Local, Remote, or Both)
+        public LogDestination LogDestination { get; set; } = LogDestination.Local;
+
+        // Docker server URL for remote log centralization
+        public string DockerServerUrl { get; set; } = string.Empty;
+
         /// <summary>
-        /// Loads settings from settings.json
-        /// If file does not exist, returns default settings (JSON)
+        /// Loads settings from settings.json.
+        /// If file does not exist, returns default settings.
         /// </summary>
         public static Settings Load()
         {
@@ -39,7 +55,7 @@ namespace EasySave.Services
         }
 
         /// <summary>
-        /// Saves current settings to settings.json
+        /// Saves current settings to settings.json.
         /// </summary>
         public void Save()
         {
