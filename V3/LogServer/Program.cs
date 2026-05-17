@@ -1,19 +1,20 @@
-using System.Text.Json;
-
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.ConfigureHttpJsonOptions(o =>
+    o.SerializerOptions.PropertyNameCaseInsensitive = true);
+
 var app = builder.Build();
 
 string logDir = Path.Combine(AppContext.BaseDirectory, "Logs");
 Directory.CreateDirectory(logDir);
 
-/// <summary>
-/// Receives a log entry via HTTP POST and writes it to the central log file
-/// </summary>
-app.MapPost("/log", async (HttpContext context) =>
+app.MapGet("/health", () => Results.Ok("OK"));
+
+app.MapPost("/log", async (HttpRequest request) =>
 {
     try
     {
-        using StreamReader reader = new StreamReader(context.Request.Body);
+        request.EnableBuffering();
+        using StreamReader reader = new StreamReader(request.Body, leaveOpen: true);
         string body = await reader.ReadToEndAsync();
 
         string logFile = Path.Combine(logDir, DateTime.Now.ToString("yyyy-MM-dd") + ".json");

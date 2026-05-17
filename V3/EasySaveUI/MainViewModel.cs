@@ -38,16 +38,12 @@ namespace EasySave.ViewModels
         {
             Task.Run(async () =>
             {
-                // Load settings to get the configured business software name
-                Settings settings = Settings.Load();
-                string softwareName = settings.BusinessSoftware;
-
                 while (true)
                 {
-                    // Update the global static flag inside BusinessSoftwareService
-                    _softwareService.MonitorProcess(softwareName);
+                    // Reload settings each tick so changes take effect without restart
+                    Settings settings = Settings.Load();
+                    _softwareService.MonitorProcess(settings.BusinessSoftware);
 
-                    // Wait 1 second before checking again
                     await Task.Delay(1000);
                 }
             });

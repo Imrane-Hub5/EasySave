@@ -5,11 +5,13 @@ namespace EasySave.Services
     public class BackupSemaphore
     {
         private static SemaphoreSlim _largeFileSemaphore = new SemaphoreSlim(1, 1);
-        private const long LargeFileThreshold = 15 * 1024 * 1024; // 15 MB
 
         public static async Task AccessLargeFile(long fileSize, Func<Task> action)
         {
-            if (fileSize > LargeFileThreshold)
+            Settings settings = Settings.Load();
+            long threshold = settings.MaxParallelFileSizeKo * 1024;
+
+            if (fileSize > threshold)
             {
                 await _largeFileSemaphore.WaitAsync();
                 try { await action(); }

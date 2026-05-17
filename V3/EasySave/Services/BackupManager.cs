@@ -93,7 +93,7 @@ namespace EasySave.Services
             if (index < 0 || index >= _jobs.Count) return;
             BackupJob job = _jobs[index];
             AssignStrategy(job);
-            job.Execute(_logger, _stateManager);
+            job.ExecuteAsync(_logger, _stateManager).GetAwaiter().GetResult();
         }
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace EasySave.Services
             {
                 BackupJob current = job;
                 AssignStrategy(current);
-                tasks.Add(Task.Run(() => current.Execute(_logger, _stateManager)));
+                tasks.Add(current.ExecuteAsync(_logger, _stateManager));
             }
 
             Task.WhenAll(tasks).Wait();

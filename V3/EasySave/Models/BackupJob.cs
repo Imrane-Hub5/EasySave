@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using EasyLog;
 using EasySave.Services;
@@ -42,26 +43,18 @@ namespace EasySave.Models
 
             Settings settings = Settings.Load();
             CryptoSoftService crypto = new CryptoSoftService(settings.CryptoSoftPath);
+            PriorityQueue.SetExtensions(settings.PriorityExtensions ?? new List<string>());
 
-            // Check business software before starting from global flag managed by monitoring thread
-            if (BusinessSoftwareService.IsBlocked)
-            {
-                logger.Log(new LogEntry
-                {
-                    Timestamp = DateTime.Now,
-                    JobName = Name,
-                    SourcePath = string.Empty,
-                    TargetPath = string.Empty,
-                    FileSize = 0,
-                    TransferTime = -1,
-                    EncryptionTime = 0
-                });
-                return;
-            }
+            // Wait while business software is running before starting
+            while (BusinessSoftwareService.IsBlocked)
+                await Task.Delay(500);
 
             Controller.Reset();
 
-            List<string> files = GetAllFiles(SourcePath);
+            // Sort files: priority extensions first, then others
+            List<string> files = GetAllFiles(SourcePath)
+                .OrderByDescending(f => PriorityQueue.IsPriority(f))
+                .ToList();
             long totalSize = GetTotalSize(files);
             int remainingFiles = files.Count;
             long remainingSize = totalSize;
@@ -86,22 +79,9 @@ namespace EasySave.Models
 
                 Controller.WaitIfPaused();
 
-                // Check global business software flag during loop execution
-                if (BusinessSoftwareService.IsBlocked)
-                {
-                    logger.Log(new LogEntry
-                    {
-                        Timestamp = DateTime.Now,
-                        JobName = Name,
-                        SourcePath = sourceFile,
-                        TargetPath = string.Empty,
-                        FileSize = 0,
-                        TransferTime = -1,
-                        EncryptionTime = 0
-                    });
-                    stateManager.ResetState(Name);
-                    return;
-                }
+                // Wait while business software is running — resume automatically when it closes
+                while (BusinessSoftwareService.IsBlocked)
+                    await Task.Delay(500);
 
                 string relativePath = Path.GetRelativePath(SourcePath, sourceFile);
                 string targetFile = Path.Combine(TargetPath, relativePath);

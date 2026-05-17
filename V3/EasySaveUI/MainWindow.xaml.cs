@@ -66,7 +66,7 @@ namespace EasySaveUI
         /// <summary>
         /// Runs the selected job.
         /// </summary>
-        private void BtnRun_Click(object sender, RoutedEventArgs e)
+        private async void BtnRun_Click(object sender, RoutedEventArgs e)
         {
             int index = JobsGrid.SelectedIndex;
             if (index < 0)
@@ -74,16 +74,16 @@ namespace EasySaveUI
                 MessageBox.Show("Please select a job to run.");
                 return;
             }
-            _backupManager.RunJob(index);
+            await Task.Run(() => _backupManager.RunJob(index));
             MessageBox.Show("Backup completed!");
         }
 
         /// <summary>
         /// Runs all jobs in parallel.
         /// </summary>
-        private void BtnRunAll_Click(object sender, RoutedEventArgs e)
+        private async void BtnRunAll_Click(object sender, RoutedEventArgs e)
         {
-            _backupManager.RunAll();
+            await Task.Run(() => _backupManager.RunAll());
             MessageBox.Show("All backups completed!");
         }
 

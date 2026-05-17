@@ -32,6 +32,12 @@ namespace EasySave.Services
         // File extensions to encrypt
         public List<string> EncryptedExtensions { get; set; } = new();
 
+        // File extensions processed first (priority queue)
+        public List<string> PriorityExtensions { get; set; } = new();
+
+        // Max file size (in Ko) allowed to transfer in parallel — larger files are serialized
+        public long MaxParallelFileSizeKo { get; set; } = 15360;
+
         // Path to the CryptoSoft executable
         public string CryptoSoftPath { get; set; } = string.Empty;
 

@@ -20,7 +20,7 @@ namespace EasySaveUI
         public BackupJobViewModel(BackupJob job)
         {
             _job = job;
-            _controller = new BackupJobController();
+            _controller = job.Controller;
 
             PauseCommand = new RelayCommand(() => _controller.Pause());
             PlayCommand = new RelayCommand(() => _controller.Play());
