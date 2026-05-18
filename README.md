@@ -263,4 +263,143 @@ CryptoSoft.exe is an external tool that encrypts files using XOR algorithm.
 
 ---
 
+```markdown
+---
+
+## 📁 V3 — WPF Graphical Application + Parallel Backup
+
+### What's new in v3.0?
+- ✅ **Parallel backup** — all jobs run simultaneously via `Task.WhenAll()`
+- ✅ **Priority files** — priority extensions processed before others
+- ✅ **Large file limit** — only one file above n Ko transferred at a time (`SemaphoreSlim`)
+- ✅ **Pause / Play / Stop** — real-time control per job (`CancellationToken` + `ManualResetEventSlim`)
+- ✅ **Business software auto-pause** — all jobs pause automatically, resume when closed
+- ✅ **CryptoSoft mono-instance** — global `Mutex` prevents multiple simultaneous instances
+- ✅ **Centralized logs via Docker** — HTTP POST to a remote log server (Local / Remote / Both)
+
+### Run
+```bash
+cd EasySave/V3
+dotnet build EasySave.sln
+dotnet run --project EasySave
+```
+
+### Docker (log server)
+```bash
+cd V3/LogServer
+docker build -t easysave-logserver .
+docker run -d -p 5000:5000 --name easysave-logs easysave-logserver
+docker logs easysave-logs
+```
+
+### Command line mode
+```bash
+EasySave.exe 1        # Execute job 1
+EasySave.exe 1-3      # Execute jobs 1 to 3
+EasySave.exe 1;3      # Execute jobs 1 and 3
+```
+
+### Project Structure
+```
+V3/
+├── EasySave/
+│   ├── Models/
+│   │   ├── BackupJob.cs               # Updated - ExecuteAsync, parallel, priority
+│   │   ├── JobState.cs
+│   │   └── Enums.cs
+│   ├── Services/
+│   │   ├── BackupManager.cs           # Updated - Task.WhenAll()
+│   │   ├── StateManager.cs
+│   │   ├── LanguageManager.cs
+│   │   ├── Settings.cs                # Updated - PriorityExtensions, MaxParallelFileSizeKo, LogDestination, DockerServerUrl
+│   │   ├── CryptoSoftService.cs       # Updated - global Mutex mono-instance
+│   │   ├── BusinessSoftwareService.cs # Updated - auto-pause via IsBlocked
+│   │   ├── BackupJobController.cs     # NEW - Pause/Play/Stop per job
+│   │   ├── BackupSemaphore.cs         # NEW - SemaphoreSlim for large files
+│   │   └── PriorityQueue.cs           # NEW - priority file extensions management
+│   ├── Strategies/
+│   │   ├── IBackupStrategy.cs
+│   │   ├── FullBackupStrategy.cs
+│   │   └── DiffBackupStrategy.cs
+│   └── EasySave.csproj
+├── EasyLog/
+│   ├── Logger.cs                      # Updated - Local/Remote/Both destination
+│   ├── LogEntry.cs
+│   ├── ILogFormatter.cs
+│   ├── JsonFormatter.cs
+│   ├── XmlFormatter.cs
+│   └── EasyLog.csproj
+├── EasySaveUI/
+│   ├── MainWindow.xaml                # Updated - Pause/Play/Stop buttons, progress bar
+│   ├── MainWindow.xaml.cs
+│   ├── AddJobWindow.xaml
+│   ├── AddJobWindow.xaml.cs
+│   ├── SettingsWindow.xaml            # Updated - Docker URL, log destination, priority extensions
+│   ├── SettingsWindow.xaml.cs
+│   ├── MainViewModel.cs               # Updated - monitoring thread
+│   ├── BackupJobViewModel.cs          # Updated - PauseCommand, PlayCommand, StopCommand
+│   ├── SettingsViewModel.cs
+│   └── RelayCommand.cs
+├── CryptoSoft/
+│   ├── Program.cs                     # Updated - Mutex mono-instance
+│   └── CryptoSoft.csproj
+└── LogServer/
+    ├── Program.cs                     # NEW - ASP.NET Core minimal API
+    ├── Dockerfile                     # NEW - Docker image
+    └── LogServer.csproj
+```
+
+### Design Patterns
+| Pattern | Where | Why |
+|---------|-------|-----|
+| **Singleton** | `BackupManager`, `Logger` | Single instance throughout the application |
+| **Strategy** | `IBackupStrategy`, `FullBackupStrategy`, `DiffBackupStrategy` | Interchangeable backup algorithms |
+| **Strategy** | `ILogFormatter`, `JsonFormatter`, `XmlFormatter` | Interchangeable log formats |
+| **MVVM** | `MainViewModel`, `BackupJobViewModel`, `SettingsViewModel` | Separation of UI and business logic |
+| **Observer** | `INotifyPropertyChanged` | Real-time UI updates |
+| **Mutex** | `CryptoSoftService`, `CryptoSoft/Program.cs` | CryptoSoft mono-instance |
+| **SemaphoreSlim** | `BackupSemaphore` | Limit simultaneous large file transfers |
+
+### Priority Files
+- Configure priority extensions in Settings (e.g. `.pdf`, `.docx`)
+- Non-priority files wait until all priority files are transferred
+- Managed by `PriorityQueue` static class with thread-safe `lock`
+
+### Large File Limit
+- Configure `MaxParallelFileSizeKo` in Settings (default: 15360 Ko)
+- Only one file above the threshold can be transferred at a time
+- Smaller files transfer freely in parallel
+
+### Pause / Play / Stop
+- Each job has its own `BackupJobController`
+- **Pause**: pauses after current file completes (`ManualResetEventSlim`)
+- **Play**: resumes from where it stopped
+- **Stop**: stops immediately at next file iteration (`CancellationToken`)
+
+### Business Software (v3.0 behaviour)
+- Background thread checks every 1000ms if software is running
+- If detected: all jobs **pause automatically**
+- When closed: all jobs **resume automatically**
+
+### Docker — Centralized Logs
+- Log destination configurable in Settings: `Local` / `Remote` / `Both`
+- Configure Docker server URL (e.g. `http://localhost:5000`)
+- EasySave sends each log entry via `HTTP POST /api/logs`
+- One centralized daily log file regardless of number of machines
+
+---
+
+## 📦 Versions
+
+| Version | Date | Description |
+|---------|------|-------------|
+| **1.0** | April 2026 | Initial release — console application, 5 jobs max, JSON logs |
+| **1.1** | May 2026 | JSON/XML log format selection |
+| **2.0** | May 2026 | WPF interface, unlimited jobs, CryptoSoft encryption, business software detection |
+| **3.0** | May 2026 | Parallel backup, priority files, Pause/Play/Stop, Mutex, Docker centralized logs |
+
+---
+
+*ProSoft — EasySave — 2026*
+
 *ProSoft — EasySave — 2026*
