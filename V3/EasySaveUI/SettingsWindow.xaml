@@ -1,117 +1,211 @@
 <Window x:Class="EasySaveUI.SettingsWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Settings" Height="620" Width="520"
+        Title="Settings" Height="640" Width="580"
         WindowStartupLocation="CenterOwner"
         ResizeMode="NoResize">
 
-    <Grid Margin="20">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+    <Window.Icon>
+        <DrawingImage>
+            <DrawingImage.Drawing>
+                <DrawingGroup>
+                    <GeometryDrawing Brush="#1976D2"
+                        Geometry="M15,9H5V5H15M12,19A3,3 0 0,1 9,16A3,3 0 0,1 12,13A3,3 0 0,1 15,16A3,3 0 0,1 12,19M17,3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V7L17,3Z"/>
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+    </Window.Icon>
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="190"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
 
-        <!-- Title -->
-        <TextBlock Grid.Row="0" Grid.ColumnSpan="2"
-                   Text="⚙ Settings" FontSize="18" FontWeight="Bold"
-                   Margin="0,0,0,20"/>
+    <Grid Background="#F4F6F9">
+        <Border Margin="20" Background="White" CornerRadius="12"
+                BorderBrush="#E5E7EB" BorderThickness="1" Padding="28,24">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="16" ShadowDepth="2" Opacity="0.06" Direction="270"/>
+            </Border.Effect>
 
-        <!-- Log Format -->
-        <TextBlock Grid.Row="1" Grid.Column="0"
-                   Text="Log Format :" VerticalAlignment="Center" Margin="0,0,0,12"/>
-        <ComboBox Grid.Row="1" Grid.Column="1"
-                  SelectedItem="{Binding LogFormat}"
-                  Margin="0,0,0,12">
-            <ComboBoxItem>JSON</ComboBoxItem>
-            <ComboBoxItem>XML</ComboBoxItem>
-        </ComboBox>
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel>
 
-        <!-- Business Software -->
-        <TextBlock Grid.Row="2" Grid.Column="0"
-                   Text="Business Software :" VerticalAlignment="Center" Margin="0,0,0,12"/>
-        <TextBox Grid.Row="2" Grid.Column="1"
-                 Text="{Binding BusinessSoftware, UpdateSourceTrigger=PropertyChanged}"
-                 Margin="0,0,0,12" Padding="4"/>
+                    <!-- Title -->
+                    <TextBlock Text="Settings" FontSize="20" FontWeight="Bold"
+                               Foreground="#111827" Margin="0,0,0,24"/>
 
-        <!-- Encrypted Extensions -->
-        <TextBlock Grid.Row="3" Grid.Column="0"
-                   Text="Encrypted Extensions :" VerticalAlignment="Center" Margin="0,0,0,12"/>
-        <TextBox Grid.Row="3" Grid.Column="1"
-                 Text="{Binding EncryptedExtensions, UpdateSourceTrigger=PropertyChanged}"
-                 Margin="0,0,0,12" Padding="4"/>
+                    <!-- ── Section: Logs ────────────────────────── -->
+                    <Border Background="#F8FAFC" CornerRadius="8" Padding="16,12"
+                            BorderBrush="#E5E7EB" BorderThickness="1" Margin="0,0,0,16">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="16"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Text="LOG FORMAT" Style="{StaticResource FormLabel}"/>
+                                <ComboBox SelectedItem="{Binding LogFormat}" Height="36" Padding="8,4"
+                                          BorderBrush="#D1D5DB" BorderThickness="1">
+                                    <ComboBoxItem>JSON</ComboBoxItem>
+                                    <ComboBoxItem>XML</ComboBoxItem>
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel Grid.Column="2">
+                                <TextBlock Text="BUSINESS SOFTWARE" Style="{StaticResource FormLabel}"/>
+                                <TextBox Text="{Binding BusinessSoftware, UpdateSourceTrigger=PropertyChanged}"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
 
-        <!-- Priority Extensions -->
-        <TextBlock Grid.Row="4" Grid.Column="0"
-                   Text="Priority Extensions :" VerticalAlignment="Center" Margin="0,0,0,12"/>
-        <TextBox Grid.Row="4" Grid.Column="1"
-                 Text="{Binding PriorityExtensions, UpdateSourceTrigger=PropertyChanged}"
-                 Margin="0,0,0,12" Padding="4"/>
+                    <!-- ── Section: Extensions ────────────────────── -->
+                    <Border Background="#F8FAFC" CornerRadius="8" Padding="16,12"
+                            BorderBrush="#E5E7EB" BorderThickness="1" Margin="0,0,0,4">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="16"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Text="ENCRYPTED EXTENSIONS" Style="{StaticResource FormLabel}"/>
+                                <TextBox Text="{Binding EncryptedExtensions, UpdateSourceTrigger=PropertyChanged}"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="2">
+                                <TextBlock Text="PRIORITY EXTENSIONS" Style="{StaticResource FormLabel}"/>
+                                <TextBox Text="{Binding PriorityExtensions, UpdateSourceTrigger=PropertyChanged}"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                    <TextBlock Text="Separate extensions with commas  ·  e.g.  .txt, .docx, .pdf"
+                               FontSize="11" Foreground="#9CA3AF" FontStyle="Italic"
+                               Margin="4,6,0,16"/>
 
-        <!-- Help text extensions -->
-        <TextBlock Grid.Row="5" Grid.ColumnSpan="2"
-                   Text="Extensions: separate with commas (e.g. .txt, .docx, .pdf)"
-                   FontStyle="Italic" Foreground="Gray" FontSize="11"
-                   Margin="0,0,0,16"/>
+                    <!-- ── Section: Files & Crypto ────────────────── -->
+                    <Border Background="#F8FAFC" CornerRadius="8" Padding="16,12"
+                            BorderBrush="#E5E7EB" BorderThickness="1" Margin="0,0,0,16">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="160"/>
+                                <ColumnDefinition Width="16"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Text="MAX FILE SIZE (Ko)" Style="{StaticResource FormLabel}"/>
+                                <TextBox Text="{Binding MaxParallelFileSizeKo, UpdateSourceTrigger=PropertyChanged}"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="2">
+                                <TextBlock Text="CRYPTOSOFT PATH" Style="{StaticResource FormLabel}"/>
+                                <TextBox Text="{Binding CryptoSoftPath, UpdateSourceTrigger=PropertyChanged}"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
 
-        <!-- Max Parallel File Size -->
-        <TextBlock Grid.Row="6" Grid.Column="0"
-                   Text="Max File Size (Ko) :" VerticalAlignment="Center" Margin="0,0,0,12"/>
-        <TextBox Grid.Row="6" Grid.Column="1"
-                 Text="{Binding MaxParallelFileSizeKo, UpdateSourceTrigger=PropertyChanged}"
-                 Margin="0,0,0,12" Padding="4"/>
+                    <!-- ── Section: Remote ───────────────────────── -->
+                    <Border Background="#F8FAFC" CornerRadius="8" Padding="16,12"
+                            BorderBrush="#E5E7EB" BorderThickness="1" Margin="0,0,0,16">
+                        <StackPanel>
+                            <TextBlock Text="DOCKER SERVER URL" Style="{StaticResource FormLabel}"/>
+                            <TextBox Text="{Binding DockerServerUrl, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                    </Border>
 
-        <!-- CryptoSoft Path -->
-        <TextBlock Grid.Row="7" Grid.Column="0"
-                   Text="CryptoSoft Path :" VerticalAlignment="Center" Margin="0,0,0,12"/>
-        <TextBox Grid.Row="7" Grid.Column="1"
-                 Text="{Binding CryptoSoftPath, UpdateSourceTrigger=PropertyChanged}"
-                 Margin="0,0,0,12" Padding="4"/>
+                    <!-- ── Section: Log Destination ──────────────── -->
+                    <TextBlock Text="LOG DESTINATION" Style="{StaticResource FormLabel}" Margin="0,0,0,10"/>
+                    <Grid Margin="0,0,0,24">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="8"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="8"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
 
-        <!-- Docker Server URL -->
-        <TextBlock Grid.Row="8" Grid.Column="0"
-                   Text="Docker Server URL :" VerticalAlignment="Center" Margin="0,0,0,12"/>
-        <TextBox Grid.Row="8" Grid.Column="1"
-                 Text="{Binding DockerServerUrl, UpdateSourceTrigger=PropertyChanged}"
-                 Margin="0,0,0,12" Padding="4"/>
+                        <!-- Local -->
+                        <Border Grid.Column="0" x:Name="LocalCard" CornerRadius="8" Padding="14,12"
+                                BorderThickness="2" Cursor="Hand">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="BorderBrush"  Value="#E5E7EB"/>
+                                    <Setter Property="Background"   Value="White"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsLocalOnly}" Value="True">
+                                            <Setter Property="BorderBrush" Value="#1976D2"/>
+                                            <Setter Property="Background"  Value="#E3F2FD"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <StackPanel>
+                                <RadioButton IsChecked="{Binding IsLocalOnly}" GroupName="LogDest"
+                                             Margin="0,0,0,4" FontWeight="SemiBold" Foreground="#111827">
+                                    Local only
+                                </RadioButton>
+                                <TextBlock Text="Logs saved locally in AppData"
+                                           FontSize="11" Foreground="#6B7280" TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </Border>
 
-        <!-- Log Destination -->
-        <TextBlock Grid.Row="9" Grid.Column="0"
-                   Text="Log Destination :" VerticalAlignment="Top" Margin="0,4,0,12"/>
-        <StackPanel Grid.Row="9" Grid.Column="1" Margin="0,0,0,12">
-            <RadioButton Content="Local only"
-                         IsChecked="{Binding IsLocalOnly}"
-                         Margin="0,0,0,4"/>
-            <RadioButton Content="Remote only (Docker)"
-                         IsChecked="{Binding IsRemoteOnly}"
-                         Margin="0,0,0,4"/>
-            <RadioButton Content="Both (Local + Docker)"
-                         IsChecked="{Binding IsBoth}"/>
-        </StackPanel>
+                        <!-- Remote -->
+                        <Border Grid.Column="2" CornerRadius="8" Padding="14,12"
+                                BorderThickness="2" Cursor="Hand">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="BorderBrush"  Value="#E5E7EB"/>
+                                    <Setter Property="Background"   Value="White"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsRemoteOnly}" Value="True">
+                                            <Setter Property="BorderBrush" Value="#1976D2"/>
+                                            <Setter Property="Background"  Value="#E3F2FD"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <StackPanel>
+                                <RadioButton IsChecked="{Binding IsRemoteOnly}" GroupName="LogDest"
+                                             Margin="0,0,0,4" FontWeight="SemiBold" Foreground="#111827">
+                                    Remote only
+                                </RadioButton>
+                                <TextBlock Text="Sent to Docker server only"
+                                           FontSize="11" Foreground="#6B7280" TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </Border>
 
-        <!-- Buttons -->
-        <StackPanel Grid.Row="12" Grid.ColumnSpan="2"
-                    Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Content="Cancel" Width="80" Margin="0,0,10,0"
-                    Click="BtnCancel_Click" Padding="6,4"/>
-            <Button Content="Save" Width="80"
-                    Command="{Binding SaveCommand}"
-                    Click="BtnSave_Click" Padding="6,4"/>
-        </StackPanel>
+                        <!-- Both -->
+                        <Border Grid.Column="4" CornerRadius="8" Padding="14,12"
+                                BorderThickness="2" Cursor="Hand">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="BorderBrush"  Value="#E5E7EB"/>
+                                    <Setter Property="Background"   Value="White"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsBoth}" Value="True">
+                                            <Setter Property="BorderBrush" Value="#1976D2"/>
+                                            <Setter Property="Background"  Value="#E3F2FD"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <StackPanel>
+                                <RadioButton IsChecked="{Binding IsBoth}" GroupName="LogDest"
+                                             Margin="0,0,0,4" FontWeight="SemiBold" Foreground="#111827">
+                                    Both
+                                </RadioButton>
+                                <TextBlock Text="Local + Docker server"
+                                           FontSize="11" Foreground="#6B7280" TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+
+                    <!-- Buttons -->
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button Content="Cancel" Style="{StaticResource SecondaryBtn}"
+                                Width="95" Margin="0,0,10,0"
+                                Click="BtnCancel_Click"/>
+                        <Button Content="Save" Style="{StaticResource PrimaryBtn}"
+                                Width="95" Command="{Binding SaveCommand}"
+                                Click="BtnSave_Click"/>
+                    </StackPanel>
+
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
     </Grid>
 </Window>

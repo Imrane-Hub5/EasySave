@@ -1,72 +1,99 @@
 <Window x:Class="EasySaveUI.AddJobWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Add Backup Job" Height="320" Width="500"
+        Title="New Backup Job" Height="480" Width="620"
+        MinHeight="420" MinWidth="520"
         WindowStartupLocation="CenterOwner"
-        ResizeMode="NoResize">
+        ResizeMode="CanResizeWithGrip">
 
-    <Grid Margin="20">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+    <Window.Icon>
+        <DrawingImage>
+            <DrawingImage.Drawing>
+                <DrawingGroup>
+                    <GeometryDrawing Brush="#1976D2"
+                        Geometry="M15,9H5V5H15M12,19A3,3 0 0,1 9,16A3,3 0 0,1 12,13A3,3 0 0,1 15,16A3,3 0 0,1 12,19M17,3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V7L17,3Z"/>
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+    </Window.Icon>
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="120"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="Auto"/>
-        </Grid.ColumnDefinitions>
+    <Grid Background="{DynamicResource PageBGBrush}">
+        <Border Margin="20" Background="{DynamicResource SurfaceBrush}" CornerRadius="12"
+                BorderBrush="{DynamicResource DividerBrush}" BorderThickness="1" Padding="28,24">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="16" ShadowDepth="2" Opacity="0.06" Direction="270"/>
+            </Border.Effect>
 
-        <!-- Title -->
-        <TextBlock Grid.Row="0" Grid.ColumnSpan="3"
-                   Text="+ Add Backup Job" FontSize="18" FontWeight="Bold"
-                   Margin="0,0,0,20"/>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="8"/>
+                    <ColumnDefinition Width="36"/>
+                </Grid.ColumnDefinitions>
 
-        <!-- Job Name -->
-        <TextBlock Grid.Row="1" Grid.Column="0"
-                   Text="Job Name :" VerticalAlignment="Center" Margin="0,0,0,12"/>
-        <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
-                 x:Name="TxtName" Padding="4" Margin="0,0,0,12"/>
+                <!-- Title -->
+                <TextBlock Grid.Row="0" Grid.ColumnSpan="3"
+                           Text="New Backup Job" FontSize="18" FontWeight="Bold"
+                           Foreground="#111827" Margin="0,0,0,24"/>
 
-        <!-- Source Path -->
-        <TextBlock Grid.Row="2" Grid.Column="0"
-                   Text="Source Path :" VerticalAlignment="Center" Margin="0,0,0,12"/>
-        <TextBox Grid.Row="2" Grid.Column="1"
-                 x:Name="TxtSource" Padding="4" Margin="0,0,5,12"/>
-        <Button Grid.Row="2" Grid.Column="2"
-                Content="..." Width="30" Margin="0,0,0,12"
-                Click="BtnBrowseSource_Click"/>
+                <!-- Job Name -->
+                <StackPanel Grid.Row="1" Grid.ColumnSpan="3" Margin="0,0,0,14">
+                    <TextBlock Text="JOB NAME" Style="{StaticResource FormLabel}"/>
+                    <TextBox x:Name="TxtName"/>
+                </StackPanel>
 
-        <!-- Target Path -->
-        <TextBlock Grid.Row="3" Grid.Column="0"
-                   Text="Target Path :" VerticalAlignment="Center" Margin="0,0,0,12"/>
-        <TextBox Grid.Row="3" Grid.Column="1"
-                 x:Name="TxtTarget" Padding="4" Margin="0,0,5,12"/>
-        <Button Grid.Row="3" Grid.Column="2"
-                Content="..." Width="30" Margin="0,0,0,12"
-                Click="BtnBrowseTarget_Click"/>
+                <!-- Source Path -->
+                <StackPanel Grid.Row="2" Grid.Column="0" Margin="0,0,0,14">
+                    <TextBlock Text="SOURCE PATH" Style="{StaticResource FormLabel}"/>
+                    <TextBox x:Name="TxtSource"/>
+                </StackPanel>
+                <Button Grid.Row="2" Grid.Column="2"
+                        Content="…" Width="36" Height="36"
+                        VerticalAlignment="Bottom" Margin="0,0,0,14"
+                        Style="{StaticResource SecondaryBtn}" Padding="0"
+                        Click="BtnBrowseSource_Click"/>
 
-        <!-- Backup Type -->
-        <TextBlock Grid.Row="4" Grid.Column="0"
-                   Text="Backup Type :" VerticalAlignment="Center" Margin="0,0,0,12"/>
-        <ComboBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2"
-                  x:Name="CmbType" Margin="0,0,0,12">
-            <ComboBoxItem IsSelected="True">Complete</ComboBoxItem>
-            <ComboBoxItem>Differential</ComboBoxItem>
-        </ComboBox>
+                <!-- Target Path -->
+                <StackPanel Grid.Row="3" Grid.Column="0" Margin="0,0,0,14">
+                    <TextBlock Text="TARGET PATH" Style="{StaticResource FormLabel}"/>
+                    <TextBox x:Name="TxtTarget"/>
+                </StackPanel>
+                <Button Grid.Row="3" Grid.Column="2"
+                        Content="…" Width="36" Height="36"
+                        VerticalAlignment="Bottom" Margin="0,0,0,14"
+                        Style="{StaticResource SecondaryBtn}" Padding="0"
+                        Click="BtnBrowseTarget_Click"/>
 
-        <!-- Buttons -->
-        <StackPanel Grid.Row="6" Grid.ColumnSpan="3"
-                    Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Content="Cancel" Width="80" Margin="0,0,10,0"
-                    Click="BtnCancel_Click" Padding="6,4"/>
-            <Button Content="Add" Width="80"
-                    Click="BtnAdd_Click" Padding="6,4"/>
-        </StackPanel>
+                <!-- Backup Type -->
+                <StackPanel Grid.Row="4" Grid.ColumnSpan="3" Margin="0,0,0,0">
+                    <TextBlock Text="BACKUP TYPE" Style="{StaticResource FormLabel}"/>
+                    <ComboBox x:Name="CmbType" Height="36" Padding="8,4"
+                              BorderBrush="#D1D5DB" BorderThickness="1">
+                        <ComboBoxItem IsSelected="True">Complete</ComboBoxItem>
+                        <ComboBoxItem>Differential</ComboBoxItem>
+                    </ComboBox>
+                </StackPanel>
+
+                <!-- Buttons -->
+                <StackPanel Grid.Row="6" Grid.ColumnSpan="3"
+                            Orientation="Horizontal" HorizontalAlignment="Right"
+                            Margin="0,20,0,0">
+                    <Button Content="Cancel" Style="{StaticResource SecondaryBtn}"
+                            Width="95" Margin="0,0,10,0"
+                            Click="BtnCancel_Click"/>
+                    <Button Content="Add Job" Style="{StaticResource PrimaryBtn}"
+                            Width="95" Click="BtnAdd_Click"/>
+                </StackPanel>
+            </Grid>
+        </Border>
     </Grid>
 </Window>

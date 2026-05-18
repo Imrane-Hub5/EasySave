@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using EasyLog;
 using EasySave.Models;
 using EasySave.Strategies;
+using EasySave.Services;
 
 namespace EasySave.Services
 {
@@ -31,27 +32,20 @@ namespace EasySave.Services
             _logger = Logger.GetInstance();
             _stateManager = new StateManager();
 
-            // Read log format directly from settings.json
-            string settingsPath = Path.Combine(dir, "settings.json");
-            string logFormat = "JSON";
+            Settings settings = Settings.Load();
 
-            if (File.Exists(settingsPath))
-            {
-                try
-                {
-                    string settingsJson = File.ReadAllText(settingsPath);
-                    JsonDocument doc = JsonDocument.Parse(settingsJson);
-                    if (doc.RootElement.TryGetProperty("LogFormat", out JsonElement prop))
-                        logFormat = prop.GetString() ?? "JSON";
-                }
-                catch { }
-            }
-
-            // Set formatter (Strategy Pattern)
-            ILogFormatter formatter = logFormat == "XML"
+            ILogFormatter formatter = settings.LogFormat == "XML"
                 ? new XmlFormatter()
                 : new JsonFormatter();
             _logger.SetFormatter(formatter);
+
+            _logger.SetDestination(settings.LogDestination);
+
+            if (settings.LogDestination != EasyLog.LogDestination.Local
+                && !string.IsNullOrEmpty(settings.DockerServerUrl))
+            {
+                _logger.SetRemoteFormatter(settings.DockerServerUrl);
+            }
 
             LoadConfig();
         }

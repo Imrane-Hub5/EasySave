@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics;
 using System.Linq;
 
@@ -5,20 +6,21 @@ namespace EasySave.Services
 {
     public class BusinessSoftwareService
     {
-        // Global flag accessible by all running BackupJobs in real-time
-        public static bool IsBlocked { get; private set; }
+        private static string _processName = string.Empty;
 
-        public bool IsBusinessSoftwareRunning(string processName)
+        // Called at the start of each backup to pick up the latest setting
+        public static void Configure(string processName)
         {
-            if (string.IsNullOrWhiteSpace(processName)) return false;
-
-            return Process.GetProcessesByName(processName).Any();
+            processName = (processName ?? string.Empty).Trim();
+            // GetProcessesByName does not use the .exe extension
+            if (processName.EndsWith(".exe", StringComparison.OrdinalIgnoreCase))
+                processName = processName[..^4];
+            _processName = processName;
         }
 
-        // Method called by the monitoring thread to update the global state
-        public void MonitorProcess(string processName)
-        {
-            IsBlocked = IsBusinessSoftwareRunning(processName);
-        }
+        // True when the blocking software is currently running
+        public static bool IsBlocked =>
+            !string.IsNullOrEmpty(_processName) &&
+            Process.GetProcessesByName(_processName).Any();
     }
 }

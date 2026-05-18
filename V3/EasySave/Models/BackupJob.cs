@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using EasyLog;
 using EasySave.Services;
@@ -16,7 +17,11 @@ namespace EasySave.Models
         public string TargetPath { get; set; } = string.Empty;
         public BackupType Type { get; set; }
 
+        [JsonIgnore]
         public BackupJobController Controller { get; } = new BackupJobController();
+
+        // (progressPercent 0-100, status)
+        public event Action<double, string>? ProgressChanged;
 
         private IBackupStrategy? _strategy;
 
@@ -44,10 +49,15 @@ namespace EasySave.Models
             Settings settings = Settings.Load();
             CryptoSoftService crypto = new CryptoSoftService(settings.CryptoSoftPath);
             PriorityQueue.SetExtensions(settings.PriorityExtensions ?? new List<string>());
+            BusinessSoftwareService.Configure(settings.BusinessSoftware);
 
             // Wait while business software is running before starting
-            while (BusinessSoftwareService.IsBlocked)
-                await Task.Delay(500);
+            if (BusinessSoftwareService.IsBlocked)
+            {
+                ProgressChanged?.Invoke(0, "Paused");
+                while (BusinessSoftwareService.IsBlocked)
+                    await Task.Delay(500);
+            }
 
             Controller.Reset();
 
@@ -68,20 +78,34 @@ namespace EasySave.Models
                 RemainingFiles = remainingFiles,
                 RemainingSize = remainingSize
             });
+            ProgressChanged?.Invoke(0, "Active");
 
             foreach (string sourceFile in files)
             {
                 if (Controller.Token.IsCancellationRequested)
                 {
                     stateManager.ResetState(Name);
+                    ProgressChanged?.Invoke(0, "Inactive");
                     return;
                 }
 
+                // Pause: block until Play() is called
                 Controller.WaitIfPaused();
 
-                // Wait while business software is running — resume automatically when it closes
-                while (BusinessSoftwareService.IsBlocked)
-                    await Task.Delay(500);
+                // Business software running: signal Paused, wait, then resume
+                if (BusinessSoftwareService.IsBlocked)
+                {
+                    double curPct = totalSize > 0
+                        ? (double)(totalSize - remainingSize) / totalSize * 100.0
+                        : 0;
+                    ProgressChanged?.Invoke(curPct, "Paused");
+                    while (BusinessSoftwareService.IsBlocked)
+                    {
+                        await Task.Delay(500);
+                        Controller.WaitIfPaused();
+                    }
+                    ProgressChanged?.Invoke(curPct, "Active");
+                }
 
                 string relativePath = Path.GetRelativePath(SourcePath, sourceFile);
                 string targetFile = Path.Combine(TargetPath, relativePath);
@@ -127,9 +151,15 @@ namespace EasySave.Models
                     SourceFile = sourceFile,
                     TargetFile = targetFile
                 });
+
+                double pct = totalSize > 0
+                    ? (double)(totalSize - remainingSize) / totalSize * 100.0
+                    : 100.0;
+                ProgressChanged?.Invoke(pct, "Active");
             }
 
             stateManager.ResetState(Name);
+            ProgressChanged?.Invoke(100, "Inactive");
         }
 
         private List<string> GetAllFiles(string path)

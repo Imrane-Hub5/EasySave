@@ -1,17 +1,8 @@
 ﻿using System.Text.Json;
+using EasyLog;
 
 namespace EasySave.Services
 {
-    /// <summary>
-    /// Log destination mode — Local only, Remote only, or Both.
-    /// </summary>
-    public enum LogDestination
-    {
-        Local,
-        Remote,
-        Both
-    }
-
     /// <summary>
     /// Stores user preferences (log format, business software, encrypted extensions)
     /// Saved in AppData\Roaming\EasySave\settings.json
@@ -42,7 +33,7 @@ namespace EasySave.Services
         public string CryptoSoftPath { get; set; } = string.Empty;
 
         // Log destination mode (Local, Remote, or Both)
-        public LogDestination LogDestination { get; set; } = LogDestination.Local;
+        public EasyLog.LogDestination LogDestination { get; set; } = EasyLog.LogDestination.Local;
 
         // Docker server URL for remote log centralization
         public string DockerServerUrl { get; set; } = string.Empty;

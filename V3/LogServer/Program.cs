@@ -28,4 +28,12 @@ app.MapPost("/log", async (HttpRequest request) =>
     }
 });
 
+app.MapGet("/logs", async () =>
+{
+    string logFile = Path.Combine(logDir, DateTime.Now.ToString("yyyy-MM-dd") + ".json");
+    if (!File.Exists(logFile)) return Results.Ok("No logs yet.");
+    string content = await File.ReadAllTextAsync(logFile);
+    return Results.Text(content, "application/json");
+});
+
 app.Run("http://0.0.0.0:5000");

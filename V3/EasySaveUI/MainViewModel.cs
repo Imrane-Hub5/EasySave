@@ -12,7 +12,6 @@ namespace EasySave.ViewModels
     {
         private ObservableCollection<BackupJob> _jobs = null!;
         private readonly BackupManager _manager;
-        private readonly BusinessSoftwareService _softwareService;
 
         public ObservableCollection<BackupJob> Jobs
         {
@@ -23,30 +22,7 @@ namespace EasySave.ViewModels
         public MainViewModel()
         {
             _manager = BackupManager.GetInstance();
-            _softwareService = new BusinessSoftwareService();
-            
             Jobs = new ObservableCollection<BackupJob>(_manager.Jobs);
-
-            // Start the background monitoring thread/task immediately
-            StartMonitoringThread();
-        }
-
-        /// <summary>
-        /// Monitors the business software process in the background every second
-        /// </summary>
-        private void StartMonitoringThread()
-        {
-            Task.Run(async () =>
-            {
-                while (true)
-                {
-                    // Reload settings each tick so changes take effect without restart
-                    Settings settings = Settings.Load();
-                    _softwareService.MonitorProcess(settings.BusinessSoftware);
-
-                    await Task.Delay(1000);
-                }
-            });
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

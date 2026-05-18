@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using EasyLog;
 using EasySave.Services;
 
 namespace EasySaveUI

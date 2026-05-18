@@ -31,7 +31,7 @@ namespace EasySaveUI
             }
 
             // Launch WPF
-            Application app = new Application();
+            EasySave.App app = new EasySave.App();
             MainWindow window = new MainWindow();
             app.Run(window);
         }

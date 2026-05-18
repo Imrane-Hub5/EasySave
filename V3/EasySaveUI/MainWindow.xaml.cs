@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows;
+using System.Windows.Media;
 using EasySave.Models;
 using EasySave.Services;
 
@@ -85,6 +86,23 @@ namespace EasySaveUI
         {
             await Task.Run(() => _backupManager.RunAll());
             MessageBox.Show("All backups completed!");
+        }
+
+        private void BtnTheme_Click(object sender, RoutedEventArgs e)
+        {
+            ThemeManager.Toggle();
+            if (ThemeManager.IsDark)
+            {
+                BtnTheme.Content = "☀  Light";
+                BtnTheme.BorderBrush = new SolidColorBrush(Color.FromRgb(0xA9, 0xE1, 0x4D));
+                BtnTheme.Foreground  = new SolidColorBrush(Color.FromRgb(0xA9, 0xE1, 0x4D));
+            }
+            else
+            {
+                BtnTheme.Content = "🌙  Dark";
+                BtnTheme.BorderBrush = new SolidColorBrush(Color.FromRgb(0x90, 0xCA, 0xF9));
+                BtnTheme.Foreground  = Brushes.White;
+            }
         }
 
         /// <summary>
