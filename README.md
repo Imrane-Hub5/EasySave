@@ -263,9 +263,6 @@ CryptoSoft.exe is an external tool that encrypts files using XOR algorithm.
 
 ---
 
-```markdown
----
-
 ## 📁 V3 — WPF Graphical Application + Parallel Backup
 
 ### What's new in v3.0?
