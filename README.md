@@ -399,4 +399,3 @@ V3/
 
 *ProSoft — EasySave — 2026*
 
-*ProSoft — EasySave — 2026*
